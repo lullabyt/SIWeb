@@ -1,0 +1,24 @@
+{
+  "name": "whatnow",
+  "version": "1.0.0",
+  "description": "Trabajo para la materia Sistemas de Información para la Web Licenciatura en Sistemas de Información Facultad de Informática - UNCO",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lullabyt/SIWeb.git"
+  },
+  "author": "Corgatelli,Pesce",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lullabyt/SIWeb/issues"
+  },
+  "homepage": "https://github.com/lullabyt/SIWeb#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.1",
+    "mongoose": "^4.12.0"
+  }
+}
