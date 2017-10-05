@@ -2,30 +2,28 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 var Schema = mongoose.Schema;
 
-var etapaSchema = new Schema({
+var eventoAcademicoSchema = new Schema({
 
   nombre: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   descripcion: String,
   fechaInicio: {
     type: Date,
     required: true
   },
-  fechaFin: {
-    type: Date,
-    required: true
+  fechaFin: Date,
+  datosGeojson: {
+    name: String,
+    category: String,
+    city: String,
+    street: String,
+    lat: Number,
+    lng: Number
   },
-  numero: Number,
-  objetivos: String,
-  participantes: String,
+  tipo: String
 
-  tareas: [{
-    type: Schema.ObjectId,
-    ref: "Tarea"
-  }]
 
 });
 
@@ -33,7 +31,7 @@ var etapaSchema = new Schema({
 
 // the schema is useless so far
 // we need to create a model using it
-var Etapa = mongoose.model('Etapa', etapaSchema);
+var EventoAcademico = mongoose.model('EventoAcademico', eventoAcademicoSchema);
 
 // make this available to our users in our Node applications
-module.exports = Etapa;
+module.exports = EventoAcademico;

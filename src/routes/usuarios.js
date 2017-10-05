@@ -2,16 +2,18 @@ const express = require('express');
 const router = express.Router();
 
 
-var Evento = require('../models/evento');
+var Usuario = require('../models/usuario');
 
 
 router.get('/', (req, res) => {
-  Evento.find().then(function(eventos) {
-    res.json(eventos);
+  Usuario.find().then(function(usuarios) {
+    res.json(usuarios);
   }, function(err) {
     res.send(err);
   });
 });
+
+
 
 
 

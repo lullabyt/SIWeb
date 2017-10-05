@@ -4,6 +4,17 @@ var Schema = mongoose.Schema;
 
 var notaSchema = new Schema({
 
+  titulo: {
+    type: String,
+    required: true
+  },
+  contenido: {
+    type: String,
+    required: true
+  },
+  tipo: String,
+  criticidad: String
+
 });
 
 

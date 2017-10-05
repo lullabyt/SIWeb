@@ -8,11 +8,17 @@ const bodyParser = require('body-parser');
 
 
 // Get our API routes
-const eventos = require('./src/routes/eventos');
+const api = require('./src/routes/api');
+const eventosGeo = require('./src/routes/eventosGeo');
+const citasMedicas = require('./src/routes/eventosGeo/citasMedicas');
+const eventosAcademicos = require('./src/routes/eventosGeo/eventosAcademicos');
+const reunionesLaborales = require('./src/routes/eventosGeo/reunionesLaborales');
+const reunionesSociales = require('./src/routes/eventosGeo/reunionesSociales');
 const notas = require('./src/routes/notas');
 const proyectos = require('./src/routes/proyectos');
 const tareas = require('./src/routes/tareas');
 const etapas = require('./src/routes/etapas');
+const usuarios = require('./src/routes/usuarios');
 
 
 const app = express();
@@ -57,11 +63,17 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 
 // Set our api routes
-app.use('/eventos', eventos);
-app.use('/notas', notas);
-app.use('/proyectos', proyectos);
-app.use('/tareas', tareas);
-app.use('/etapas', etapas);
+app.use('/api', api);
+app.use('/api/eventosGeo', eventosGeo);
+app.use('/api/eventosGeo/citasMedicas', citasMedicas);
+app.use('/api/eventosGeo/eventosAcademicos', eventosAcademicos);
+app.use('/api/eventosGeo/reunionesLaborales', reunionesLaborales);
+app.use('/api/eventosGeo/reunionesSociales', reunionesSociales);
+app.use('/api/notas', notas);
+app.use('/api/proyectos', proyectos);
+app.use('/api/tareas', tareas);
+app.use('/api/etapas', etapas);
+app.use('/api/usuarios', usuarios);
 
 
 // Catch all other routes and return the index file
@@ -69,8 +81,8 @@ app.get('*', (req, res) => {
   //Agregar cuando este angular!!
   //res.sendFile(path.join(__dirname, 'dist/index.html'));
   res.json({
-        message: 'Bienvenido a la aplicacion!'
-      })
+    message: 'Aqui no hay nada!'
+  })
 });
 
 /**

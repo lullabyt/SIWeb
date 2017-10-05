@@ -4,6 +4,38 @@ var Schema = mongoose.Schema;
 
 var proyectoSchema = new Schema({
 
+  titulo: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  contenido: {
+    type: String,
+    required: true
+  },
+  tipo: {
+    type: String,
+    required: true
+  },
+  criticidad: String,
+  objetivos: String,
+  fechaInicio: {
+    type: Date,
+    required: true
+  },
+  fechaFin: Date,
+  participantes: String,
+
+  tareas: [{
+    type: Schema.ObjectId,
+    ref: "Tarea"
+  }],
+
+  etapas: [{
+    type: Schema.ObjectId,
+    ref: "Etapa"
+  }]
+
 });
 
 

@@ -4,6 +4,24 @@ var Schema = mongoose.Schema;
 
 var tareaSchema = new Schema({
 
+  titulo: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  contenido: {
+    type: String,
+    required: true
+  },
+  tipo: {
+    type: String,
+    required: true
+  },
+  criticidad: String,
+  objetivos: String,
+  participantes: String
+
+
 });
 
 
