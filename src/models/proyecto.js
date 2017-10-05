@@ -6,8 +6,7 @@ var proyectoSchema = new Schema({
 
   titulo: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   contenido: {
     type: String,

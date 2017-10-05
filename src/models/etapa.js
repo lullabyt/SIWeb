@@ -6,8 +6,7 @@ var etapaSchema = new Schema({
 
   nombre: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   descripcion: String,
   fechaInicio: {
