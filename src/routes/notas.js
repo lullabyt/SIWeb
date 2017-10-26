@@ -15,24 +15,30 @@ router.get('/', (req, res) => {
 });
 
 
-//ALTA NOTA
-router.post((req, res) => {
 
-  var nota = new Nota({
+//ALTA NOTA
+router.post('/', (req, res) => {
+
+  var nota = new Nota(
+    req.body
+    /*
     titulo: req.body.titulo,
     contenido: req.body.contenido,
     tipo: req.body.tipo,
     criticidad: req.body.criticidad
-  });
+
+    */
+  );
 
   nota.save().then(function() {
     res.json(nota);
 
   }, function(err) {
     res.send(err);
-    console.log("Error al crear una nota");
   });
 })
+
+
 
 //MODIFICACION DE UNA NOTA
 
@@ -52,25 +58,20 @@ router.patch('/:_id', (req, res) => {
 
 //DELETE UNA NOTA
 
-router.delete('/:_id',(req, res) => {
+router.delete('/:_id', (req, res) => {
 
   Nota.findByIdAndRemove(req.params._id)
     .then(function(nota) {
-      res.send("Nota eliminada");
+      res.json("Nota eliminada");
     }, function(err) {
       res.send(err);
-      console.log("Error al eliminar la nota");
     });
 })
 
 
 
-
-
-
-
 //Obtener las notas de un usuario particular
-router.get('/:_id', (req, res) => {
+router.get('/usuario/:_id', (req, res) => {
   Usuario.find({
       _id: req.params._id
     }, "notas")
@@ -83,9 +84,6 @@ router.get('/:_id', (req, res) => {
       res.send(err);
     });
 });
-
-
-
 
 
 

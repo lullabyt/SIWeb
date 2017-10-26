@@ -24,6 +24,10 @@ var proyectoSchema = new Schema({
   },
   fechaFin: Date,
   participantes: [String],
+  estado: {
+    type: String,
+    default: 'En curso'
+  },
 
   tareas: [{
     type: Schema.ObjectId,

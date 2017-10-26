@@ -70,8 +70,8 @@ router.patch('/:_id', (req, res) => {
     req.body, {
       //para que devuelva actualizado
       new: true
-    }).then(function(user) {
-    res.json(user);
+    }).then(function(proyecto) {
+    res.json(proyecto);
 
   }, function(err) {
     res.send(err);

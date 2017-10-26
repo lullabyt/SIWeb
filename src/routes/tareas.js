@@ -18,25 +18,28 @@ router.get('/', (req, res) => {
 
 
 //ALTA TAREA
-router.post((req, res) => {
+router.post('/', (req, res) => {
 
-  var tarea = new Tarea({
-    titulo: req.body.titulo,
-    contenido: req.body.contenido,
-    tipo: req.body.tipo,
-    criticidad: req.body.criticidad,
-    objetivos: req.body.objetivos,
-    participantes: req.body.participantes
-  });
+  var tarea = new Tarea(
+    req.body
+    /*
+        titulo: req.body.titulo,
+        contenido: req.body.contenido,
+        tipo: req.body.tipo,
+        criticidad: req.body.criticidad,
+        objetivos: req.body.objetivos,
+        participantes: req.body.participantes
+        */
+  );
 
   tarea.save().then(function() {
     res.json(tarea);
 
   }, function(err) {
     res.send(err);
-    console.log("Error al crear una tarea");
   });
 })
+
 
 //MODIFICACION DE UNA TAREA
 
@@ -56,18 +59,15 @@ router.patch('/:_id', (req, res) => {
 
 //DELETE UNA TAREA
 
-router.delete('/:_id',(req, res) => {
+router.delete('/:_id', (req, res) => {
 
   Tarea.findByIdAndRemove(req.params._id)
     .then(function(tarea) {
-      res.send("Tarea eliminada");
+      res.json("Tarea eliminada");
     }, function(err) {
       res.send(err);
-      console.log("Error al eliminar la tarea");
     });
 })
-
-
 
 
 
@@ -75,7 +75,7 @@ router.delete('/:_id',(req, res) => {
 router.get('/proyecto/:_id', (req, res) => {
   Proyecto.find({
       _id: req.params._id
-    },"tareas")
+    }, "tareas")
     .populate(
       'tareas')
     .then(function(proyecto) {
@@ -86,11 +86,13 @@ router.get('/proyecto/:_id', (req, res) => {
     });
 })
 
+
+
 //Obtener las TAREAS de una etapa particular
 router.get('/etapa/:_id', (req, res) => {
   Etapa.find({
       _id: req.params._id
-    },"tareas")
+    }, "tareas")
     .populate(
       'tareas')
     .then(function(etapa) {

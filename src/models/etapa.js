@@ -20,7 +20,10 @@ var etapaSchema = new Schema({
   numero: Number,
   objetivos: String,
   participantes: String,
-
+  estado: {
+    type: String,
+    default: 'creada'
+  },
   tareas: [{
     type: Schema.ObjectId,
     ref: "Tarea"

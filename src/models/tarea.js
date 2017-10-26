@@ -16,6 +16,10 @@ var tareaSchema = new Schema({
     type: String,
     required: true
   },
+  estado: {
+    type: String,
+    default: 'creada'
+  },
   criticidad: String,
   objetivos: String,
   participantes: String

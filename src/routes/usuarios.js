@@ -19,6 +19,8 @@ router.get('/:_id', (req, res) => {
   Usuario.findById(req.params._id)
     .populate(
       'notas proyectos')
+    .populate(
+      'eventos.item')
     .then(function(usuario) {
       res.json(usuario);
 

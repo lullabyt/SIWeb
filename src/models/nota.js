@@ -13,7 +13,11 @@ var notaSchema = new Schema({
     required: true
   },
   tipo: String,
-  criticidad: String
+  criticidad: String,
+  estado: {
+    type: String,
+    default: 'En curso'
+  }
 
 });
 
