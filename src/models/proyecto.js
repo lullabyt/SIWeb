@@ -17,13 +17,13 @@ var proyectoSchema = new Schema({
     required: true
   },
   criticidad: String,
-  objetivos: String,
+  objetivos: [String],
   fechaInicio: {
     type: Date,
     required: true
   },
   fechaFin: Date,
-  participantes: String,
+  participantes: [String],
 
   tareas: [{
     type: Schema.ObjectId,
