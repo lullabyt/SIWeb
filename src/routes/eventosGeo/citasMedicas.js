@@ -14,7 +14,6 @@ router.get('/', (req, res) => {
 
 
 
-
 router.post('/', (req, res) => {
 
   var evento = new CitaMedica(

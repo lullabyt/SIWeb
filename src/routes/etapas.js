@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 var Etapa = require('../models/etapa');
+var Proyecto = require('../models/proyecto');
 
 
 //get todas las etapas
@@ -13,7 +14,20 @@ router.get('/', (req, res) => {
   });
 });
 
+//Obtener las etapas de un proyecto particular
+router.get('/proyecto/:_id', (req, res) => {
+  Proyecto.find({
+      _id: req.params._id
+    }, "etapas")
+    .populate(
+      'etapas')
+    .then(function(proyecto) {
+      res.json(proyecto);
 
+    }, function(err) {
+      res.send(err);
+    });
+});
 
 
 router.post('/', (req, res) => {

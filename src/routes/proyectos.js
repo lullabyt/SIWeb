@@ -3,6 +3,8 @@ const router = express.Router();
 
 
 var Proyecto = require('../models/proyecto');
+var Usuario = require('../models/usuario');
+
 
 
 router.get('/', (req, res) => {
@@ -28,6 +30,21 @@ router.get('/:_id', (req, res) => {
     .populate('tareas')
     .then(function(proyecto) {
       res.json(proyecto);
+
+    }, function(err) {
+      res.send(err);
+    });
+});
+
+//Obtener los proyectos de un usuario particular
+router.get('/usuario/:_id', (req, res) => {
+  Usuario.find({
+      _id: req.params._id
+    }, "proyectos")
+    .populate(
+      'proyectos')
+    .then(function(usuario) {
+      res.json(usuario);
 
     }, function(err) {
       res.send(err);

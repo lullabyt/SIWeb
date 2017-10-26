@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 var EventoGeo = require('../models/eventoGeo');
-
+var Usuario = require('../models/usuario');
 
 
 router.get('/', (req, res) => {
@@ -14,7 +14,20 @@ router.get('/', (req, res) => {
   });
 });
 
+//Obtener los eventos de un usuario particular - no importa el tipo
+router.get('/usuario/:_id', (req, res) => {
+  Usuario.find({
+      _id: req.params._id
+    }, "eventos")
+    .populate(
+      'eventos')
+    .then(function(usuario) {
+      res.json(usuario);
 
+    }, function(err) {
+      res.send(err);
+    });
+});
 
 router.post('/', (req, res) => {
 
