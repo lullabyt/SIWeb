@@ -2,13 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 var Nota = require('../models/nota');
+var Usuario = require('../models/usuario');
 
-
-//ruta
-router.route('/')
 
 //Obtener todas las notas existentes
-.get('/', (req, res) => {
+router.get('/', (req, res) => {
   Nota.find().then(function(notas) {
     res.json(notas);
   }, function(err) {
@@ -18,7 +16,7 @@ router.route('/')
 
 
 //ALTA NOTA
-.post((req, res) => {
+router.post((req, res) => {
 
   var nota = new Nota({
     titulo: req.body.titulo,
@@ -38,7 +36,7 @@ router.route('/')
 
 //MODIFICACION DE UNA NOTA
 
-.put('/:_id',(req, res) => {
+router.put('/:_id',(req, res) => {
 
   Nota.findById(req.params._id)
     .then(function(nota) {
@@ -73,7 +71,7 @@ router.route('/')
 
 //DELETE UNA NOTA
 
-.delete('/:_id',(req, res) => {
+router.delete('/:_id',(req, res) => {
 
   Nota.findByIdAndRemove(req.params._id)
     .then(function(nota) {
@@ -87,12 +85,12 @@ router.route('/')
 
 
 
-/*
+
 //Obtener las notas de un usuario particular
 router.get('/:_id', (req, res) => {
   Usuario.find({
       _id: req.params._id
-    })
+    }, "notas")
     .populate(
       'notas')
     .then(function(usuario) {
@@ -102,7 +100,7 @@ router.get('/:_id', (req, res) => {
       res.send(err);
     });
 });
-*/
+
 
 
 
