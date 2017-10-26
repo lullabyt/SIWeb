@@ -21,10 +21,10 @@ var usuarioSchema = new Schema({
     type: String,
     required: true
   },
-  telefono: Number,
+  telefono: String,
   genero: String,
   fechaNacimiento: {
-    type: String,
+    type: Date,
     required: true
   },
   localidadActual: {
