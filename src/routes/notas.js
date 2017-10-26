@@ -36,37 +36,18 @@ router.post((req, res) => {
 
 //MODIFICACION DE UNA NOTA
 
-router.put('/:_id',(req, res) => {
+router.patch('/:_id', (req, res) => {
 
-  Nota.findById(req.params._id)
-    .then(function(nota) {
+  Nota.findByIdAndUpdate(req.params._id,
+    req.body, {
+      new: true
+    }).then(function(nota) {
+    res.json(nota);
 
-        if(req.body.titulo){
-          nota.titulo= req.body.titulo;
-        }
-        if(req.body.contenido){
-          nota.contenido= req.body.contenido;
-        }
-        if(req.body.tipo){
-          nota.tipo= req.body.tipo;
-        }
-        if(req.body.criticidad){
-          nota.criticidad= req.body.criticidad;
-        }
-
-        nota.save().then(function() {
-          res.json(nota);
-
-        }, function(err) {
-          res.send(err);
-          console.log("Error al actualizar la nota");
-        });
-
-    }, function(err) {
-      res.send(err);
-      console.log("Error al encontrar la nota para actualizar");
-    });
-})
+  }, function(err) {
+    res.send(err);
+  });
+});
 
 
 //DELETE UNA NOTA
@@ -81,6 +62,8 @@ router.delete('/:_id',(req, res) => {
       console.log("Error al eliminar la nota");
     });
 })
+
+
 
 
 
