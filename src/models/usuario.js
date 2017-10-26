@@ -2,6 +2,10 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 var Schema = mongoose.Schema;
 
+//para hash contraseñas
+var bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 var usuarioSchema = new Schema({
 
   nombre: {
@@ -56,6 +60,50 @@ var usuarioSchema = new Schema({
 
 
 });
+
+
+//manejo de contraseña
+usuarioSchema.pre('validate', function(next) {
+  var user = this;
+
+  // only hash the password if it has been modified (or is new)
+  if (!user.isModified('password')) return next();
+
+  // generate a salt
+  bcrypt.genSalt(saltRounds).then(function(salt) {
+
+    // hash the password using our new salt
+    bcrypt.hash(user.password, salt).then(function(hash) {
+
+      // override the cleartext password with the hashed one
+      user.password = hash;
+
+      next();
+
+
+    }, function(err) {
+      console.log(err);
+      next();
+    });
+
+  }, function(err) {
+    console.log(err);
+    next();
+  });
+});
+
+
+
+usuarioSchema.methods.comparePassword = function(candidatePassword, cb) {
+
+  bcrypt.compare(candidatePassword, this.password).then(function(isMatch) {
+
+    cb(null, isMatch);
+  }, function(err) {
+    cb(err);
+  });
+};
+
 
 
 // the schema is useless so far

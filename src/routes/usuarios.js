@@ -16,6 +16,7 @@ router.get('/', (req, res) => {
 
 //get todos los datos pertenecientes a un usuario especifico, junto con sus respectivas notas y proyectos
 router.get('/:_id', (req, res) => {
+
   Usuario.findById(req.params._id)
     .populate(
       'notas proyectos')
@@ -27,6 +28,31 @@ router.get('/:_id', (req, res) => {
     }, function(err) {
       res.send(err);
     });
+
+  /*
+
+  test para probar compare password
+
+    Usuario.findOne({
+      nombre: 'dsf'
+    }, function(err, user) {
+      if (err) throw err;
+
+      // test a matching password
+      user.comparePassword('Password123', function(err, isMatch) {
+        if (err) throw err;
+        console.log('Password123:', isMatch); // -&gt; Password123: true
+      });
+
+      // test a failing password
+      user.comparePassword('123Password', function(err, isMatch) {
+        if (err) throw err;
+        console.log('123Password:', isMatch); // -&gt; 123Password: false
+      });
+    });
+
+  */
+
 });
 
 
@@ -59,7 +85,7 @@ router.post('/', (req, res) => {
 
 
 
-
+//para cualquier modifcacion menos contraseñas
 router.patch('/:_id', (req, res) => {
 
   Usuario.findByIdAndUpdate(req.params._id,
@@ -73,6 +99,27 @@ router.patch('/:_id', (req, res) => {
   }, function(err) {
     res.send(err);
   });
+});
+
+
+//para modificar solo contraseñas
+router.patch('/password/:_id', (req, res) => {
+
+  Usuario.findById(req.params._id)
+    .then(function(user) {
+
+      user.password = req.body.password;
+
+      user.save().then(function() {
+        res.json(user);
+
+      }, function(err) {
+        res.send(err);
+      });
+
+    }, function(err) {
+      res.send(err);
+    });
 });
 
 
