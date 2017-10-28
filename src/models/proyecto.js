@@ -20,7 +20,7 @@ var proyectoSchema = new Schema({
   objetivos: [String],
   fechaInicio: {
     type: Date,
-    //required: true
+    required: true
   },
   fechaFin: Date,
   participantes: [String],

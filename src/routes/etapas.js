@@ -30,7 +30,7 @@ router.get('/proyecto/:_id', (req, res) => {
 });
 
 
-router.post('/', (req, res) => {
+router.post('/:_id', (req, res) => {
 
   var etapa = new Etapa(
 
@@ -40,7 +40,33 @@ router.post('/', (req, res) => {
 
   //una vez creada se guarda en la base de datos
   etapa.save().then(function() {
-    res.json(etapa);
+
+    Proyecto.findById(
+        req.params._id
+      ).then(function(proyecto) {
+        //actualiza la referencia al usuario
+        proyecto.etapas.push(etapa._id);
+        proyecto.save().then(function(){
+            res.json(etapa);
+        }, function(err){
+
+          //Si no puede actualizar el usuario se debe borrar la etapa ya guardada
+          /*
+          Etapa.findByIdAndRemove(
+            etapa._id
+          ).then(function() {
+            res.json({
+              message: 'No se pudo crear la etapa'
+            });
+          }, function(err) {
+            res.send(err);
+          });
+          */
+          res.send(err);
+        });
+      }, function(err) {
+        res.send(err);
+      });
 
   }, function(err) {
     res.send(err);
