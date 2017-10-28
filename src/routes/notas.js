@@ -44,7 +44,7 @@ router.post('/:_id', (req, res) => {
           //Si no puede actualizar el usuario se debe borrar la nota ya guardada
           /*
           Nota.findByIdAndRemove(
-            req.params._id
+            nota._id
           ).then(function() {
             res.json({
               message: 'No se pudo crear la nota'

@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 
 
 
-router.post('/', (req, res) => {
+router.post('/:_id', (req, res) => {
 
   var evento = new ReunionSocial(
 
@@ -24,7 +24,36 @@ router.post('/', (req, res) => {
 
   //una vez creada se guarda en la base de datos
   evento.save().then(function() {
-    res.json(evento);
+    Usuario.findById(
+        req.params._id
+      ).then(function(usuario) {
+        //actualiza la referencia al usuario
+        var event = {
+          kind: 'reunionSocial',
+          item: evento._id
+        }
+        usuario.eventos.push(event);
+        usuario.save().then(function(){
+            res.json(evento);
+        }, function(err){
+
+          //Si no puede actualizar el usuario se debe borrar el evento ya guardado
+          /*
+          Evento.findByIdAndRemove(
+            evento._id
+          ).then(function() {
+            res.json({
+              message: 'No se pudo crear el evento'
+            });
+          }, function(err) {
+            res.send(err);
+          });
+          */
+          res.send(err);
+        });
+      }, function(err) {
+        res.send(err);
+      });
 
   }, function(err) {
     res.send(err);

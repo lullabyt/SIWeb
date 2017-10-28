@@ -84,7 +84,7 @@ router.post('/:_id', (req, res) => {
             //Si no puede actualizar el usuario se debe borrar el proyecto ya guardado
             /*
             Proyecto.findByIdAndRemove(
-              req.params._id
+              proyect._id
             ).then(function() {
               res.json({
                 message: 'No se pudo crear el proyecto'
