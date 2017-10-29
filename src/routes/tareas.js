@@ -17,8 +17,8 @@ router.get('/', (req, res) => {
 });
 
 
-//ALTA TAREA
-router.post('/', (req, res) => {
+//ALTA TAREA DE UN PROYECTO
+router.post('/proyecto/:_id', (req, res) => {
 
   var tarea = new Tarea(
     req.body
@@ -33,13 +33,88 @@ router.post('/', (req, res) => {
   );
 
   tarea.save().then(function() {
-    res.json(tarea);
+
+    Proyecto.findById(
+        req.params._id
+      ).then(function(proyecto) {
+        //actualiza la referencia al usuario
+        proyecto.tareas.push(tarea._id);
+        proyecto.save().then(function(){
+            res.json(tarea);
+        }, function(err){
+
+          //Si no puede actualizar el usuario se debe borrar la tarea ya guardada
+          /*
+          Nota.findByIdAndRemove(
+            tarea._id
+          ).then(function() {
+            res.json({
+              message: 'No se pudo crear la tarea'
+            });
+          }, function(err) {
+            res.send(err);
+          });
+          */
+          res.send(err);
+        });
+      }, function(err) {
+        res.send(err);
+      });
 
   }, function(err) {
     res.send(err);
   });
 })
 
+//ALTA TAREA DE UNA ETAPA
+
+router.post('/etapa/:_id', (req, res) => {
+
+  var tarea = new Tarea(
+    req.body
+    /*
+        titulo: req.body.titulo,
+        contenido: req.body.contenido,
+        tipo: req.body.tipo,
+        criticidad: req.body.criticidad,
+        objetivos: req.body.objetivos,
+        participantes: req.body.participantes
+        */
+  );
+
+  tarea.save().then(function() {
+
+    Etapa.findById(
+        req.params._id
+      ).then(function(etapa) {
+        //actualiza la referencia al usuario
+        etapa.tareas.push(tarea._id);
+        etapa.save().then(function(){
+            res.json(tarea);
+        }, function(err){
+
+          //Si no puede actualizar el usuario se debe borrar la tarea ya guardada
+          /*
+          Nota.findByIdAndRemove(
+            tarea._id
+          ).then(function() {
+            res.json({
+              message: 'No se pudo crear la tarea'
+            });
+          }, function(err) {
+            res.send(err);
+          });
+          */
+          res.send(err);
+        });
+      }, function(err) {
+        res.send(err);
+      });
+
+  }, function(err) {
+    res.send(err);
+  });
+})
 
 //MODIFICACION DE UNA TAREA
 

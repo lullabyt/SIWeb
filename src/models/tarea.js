@@ -18,7 +18,7 @@ var tareaSchema = new Schema({
   },
   estado: {
     type: String,
-    default: 'creada'
+    default: 'pendiente'
   },
   criticidad: String,
   objetivos: String,

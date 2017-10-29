@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 
 
 //ALTA NOTA
-router.post('/', (req, res) => {
+router.post('/:_id', (req, res) => {
 
   var nota = new Nota(
     req.body
@@ -31,7 +31,33 @@ router.post('/', (req, res) => {
   );
 
   nota.save().then(function() {
-    res.json(nota);
+
+    Usuario.findById(
+        req.params._id
+      ).then(function(usuario) {
+        //actualiza la referencia al usuario
+        usuario.notas.push(nota._id);
+        usuario.save().then(function(){
+            res.json(nota);
+        }, function(err){
+
+          //Si no puede actualizar el usuario se debe borrar la nota ya guardada
+          /*
+          Nota.findByIdAndRemove(
+            nota._id
+          ).then(function() {
+            res.json({
+              message: 'No se pudo crear la nota'
+            });
+          }, function(err) {
+            res.send(err);
+          });
+          */
+          res.send(err);
+        });
+      }, function(err) {
+        res.send(err);
+      });
 
   }, function(err) {
     res.send(err);

@@ -3,6 +3,8 @@ const router = express.Router();
 
 
 var Proyecto = require('../models/proyecto');
+var Usuario = require('../models/usuario');
+
 
 
 router.get('/', (req, res) => {
@@ -34,9 +36,24 @@ router.get('/:_id', (req, res) => {
     });
 });
 
+//Obtener los proyectos de un usuario particular
+router.get('/usuario/:_id', (req, res) => {
+  Usuario.find({
+      _id: req.params._id
+    }, "proyectos")
+    .populate(
+      'proyectos')
+    .then(function(usuario) {
+      res.json(usuario);
+
+    }, function(err) {
+      res.send(err);
+    });
+});
 
 
-router.post('/', (req, res) => {
+
+router.post('/:_id', (req, res) => {
 
   var proyect = new Proyecto(req.body
 
@@ -54,7 +71,33 @@ router.post('/', (req, res) => {
 
   //una vez creada se guarda en la base de datos
   proyect.save().then(function() {
-    res.json(proyect);
+
+      Usuario.findById(
+          req.params._id
+        ).then(function(usuario) {
+          //actualiza la referencia al usuario
+          usuario.proyectos.push(proyect._id);
+          usuario.save().then(function(){
+              res.json(proyect);
+          }, function(err){
+
+            //Si no puede actualizar el usuario se debe borrar el proyecto ya guardado
+            /*
+            Proyecto.findByIdAndRemove(
+              proyect._id
+            ).then(function() {
+              res.json({
+                message: 'No se pudo crear el proyecto'
+              });
+            }, function(err) {
+              res.send(err);
+            });
+            */
+            res.send(err);
+          });
+        }, function(err) {
+          res.send(err);
+        });
 
   }, function(err) {
     res.send(err);
