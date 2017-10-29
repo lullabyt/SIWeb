@@ -22,7 +22,7 @@ var etapaSchema = new Schema({
   participantes: String,
   estado: {
     type: String,
-    default: 'creada'
+    default: 'pendiente'
   },
   tareas: [{
     type: Schema.ObjectId,

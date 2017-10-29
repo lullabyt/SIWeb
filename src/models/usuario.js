@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+
 var usuarioSchema = new Schema({
 
   nombre: {
@@ -16,7 +17,7 @@ var usuarioSchema = new Schema({
     type: String,
     required: true
   },
-  mail: {
+  email: {
     type: String,
     required: true,
     unique: true
@@ -62,7 +63,7 @@ var usuarioSchema = new Schema({
 });
 
 
-//manejo de contraseña
+//manejo de contraseña post
 usuarioSchema.pre('validate', function(next) {
   var user = this;
 
@@ -72,24 +73,16 @@ usuarioSchema.pre('validate', function(next) {
   // generate a salt
   bcrypt.genSalt(saltRounds).then(function(salt) {
 
-    // hash the password using our new salt
-    bcrypt.hash(user.password, salt).then(function(hash) {
+      // hash the password using our new salt
+      bcrypt.hash(user.password, salt).then(function(hash) {
 
-      // override the cleartext password with the hashed one
-      user.password = hash;
+        // override the cleartext password with the hashed one
+        user.password = hash;
+        next();
 
-      next();
-
-
-    }, function(err) {
-      console.log(err);
-      next();
-    });
-
-  }, function(err) {
-    console.log(err);
-    next();
-  });
+      })
+    })
+    .catch(err => next(err));
 });
 
 

@@ -1,10 +1,140 @@
 const express = require('express');
 const router = express.Router();
-
-
+const passport = require('passport');
 var Usuario = require('../models/usuario');
 
 
+/*
+// process the signup form
+ router.post('/signup', passport.authenticate('local-signup', {
+     successRedirect : '/profile', // redirect to the secure profile section
+     failureRedirect : '/signup', // redirect back to the signup page if there is an error
+     failureFlash : true // allow flash messages
+ }));
+*/
+
+router.post('/signup', function(req, res, next) {
+  passport.authenticate('local-signup', function(err, user, info) {
+    if (err) {
+      return next(err); // will generate a 500 error
+    }
+    // Generate a JSON response reflecting authentication status
+
+    if (user) {
+      return res.send({
+        success: false,
+        message: 'That email is already taken.'
+      });
+
+    }
+
+    var newUser = new Usuario(req.body);
+
+    //una vez creada se guarda en la base de datos
+    newUser.save().then(function() {
+      //  res.json(newUser);
+
+
+      // ***********************************************************************
+      // "Note that when using a custom callback, it becomes the application's
+      // responsibility to establish a session (by calling req.login()) and send
+      // a response."
+      // Source: http://passportjs.org/docs
+      // ***********************************************************************
+
+      req.login(newUser, loginErr => {
+        if (loginErr) {
+          return next(loginErr);
+        }
+        return res.send({
+          success: true,
+          message: 'signup succeeded',
+          newUser: newUser
+        });
+      });
+
+    }, function(err) {
+      res.send(err);
+    });
+
+  })(req, res, next);
+});
+
+/*
+
+// process the login form
+    router.post('/login', passport.authenticate('local-login', {
+        successRedirect : '/profile', // redirect to the secure profile section
+        failureRedirect : '/login', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+    }));
+*/
+router.post('/login', function(req, res, next) {
+  passport.authenticate('local-login', function(err, user, info) {
+    if (err) {
+      return next(err); // will generate a 500 error
+    }
+    // Generate a JSON response reflecting authentication status
+    if (!user) {
+      return res.send({
+        success: false,
+        message: 'authentication failed'
+      });
+    }
+    // ***********************************************************************
+    // "Note that when using a custom callback, it becomes the application's
+    // responsibility to establish a session (by calling req.login()) and send
+    // a response."
+    // Source: http://passportjs.org/docs
+    // ***********************************************************************
+    req.login(user, loginErr => {
+      if (loginErr) {
+        return next(loginErr);
+      }
+      return res.send({
+        success: true,
+        message: 'authentication succeeded'
+      });
+    });
+  })(req, res, next);
+});
+
+
+
+router.get('/logout', isLoggedIn, function(req, res) {
+
+  req.logout();
+  //  req.flash('success_msg', 'You are logged out.')
+  //  res.redirect('/');
+
+  res.send({
+    success: true,
+    message: 'You are logged out.'
+  });
+});
+
+
+
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+
+  // if user is authenticated in the session, carry on
+  if (req.isAuthenticated()) {
+
+    return next();
+  }
+  // if they aren't redirect them to the home page
+  //res.redirect('/');
+
+  res.send({
+    success: false,
+    message: 'not logged in'
+  });
+}
+
+
+
+//get todos los usuarios
 router.get('/', (req, res) => {
   Usuario.find().then(function(usuarios) {
     res.json(usuarios);
@@ -30,7 +160,6 @@ router.get('/:_id', (req, res) => {
     });
 
   /*
-
   test para probar compare password
 
     Usuario.findOne({

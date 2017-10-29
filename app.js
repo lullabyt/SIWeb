@@ -4,7 +4,12 @@ const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
 
+const passport = require('passport');
+const flash = require('connect-flash-plus');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
+const app = express();
 
 
 // Get our API routes
@@ -21,15 +26,11 @@ const etapas = require('./src/routes/etapas');
 const usuarios = require('./src/routes/usuarios');
 
 
-const app = express();
-
-
 //Import the mongoose module
 var mongoose = require('mongoose');
 
 //direccion a la base de datos
 var dbURI = 'mongodb://localhost/whatnow';
-
 
 
 //Set up default mongoose connection
@@ -57,6 +58,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+
+
+// required for passport
+require('./src/config/passport')(passport); // pass passport for configuration
+
+app.use(session({
+  secret: 'elmegasecret', // session secret
+  saveUninitialized: true, // if false means don't create session until something stored
+  resave: false, //don't save session if unmodified
+  store: new MongoStore({
+    mongooseConnection: db,
+    ttl: 14 * 24 * 60 * 60, // = 14 days. Default session expiration
+    autoRemove: 'native' // Default
+  })
+}));
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
 
 
 
