@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 var ReunionSocial = require('../../models/eventosGeo/reunionSocial');
+var Usuario = require('../../models/usuario');
+
 
 
 router.get('/', (req, res) => {
@@ -25,35 +27,35 @@ router.post('/:_id', (req, res) => {
   //una vez creada se guarda en la base de datos
   evento.save().then(function() {
     Usuario.findById(
-        req.params._id
-      ).then(function(usuario) {
-        //actualiza la referencia al usuario
-        var event = {
-          kind: 'reunionSocial',
-          item: evento._id
-        }
-        usuario.eventos.push(event);
-        usuario.save().then(function(){
-            res.json(evento);
-        }, function(err){
+      req.params._id
+    ).then(function(usuario) {
+      //actualiza la referencia al usuario
+      var event = {
+        kind: 'reunionSocial',
+        item: evento._id
+      }
+      usuario.eventos.push(event);
+      usuario.save().then(function() {
+        res.json(evento);
+      }, function(err) {
 
-          //Si no puede actualizar el usuario se debe borrar el evento ya guardado
-          /*
-          Evento.findByIdAndRemove(
-            evento._id
-          ).then(function() {
-            res.json({
-              message: 'No se pudo crear el evento'
-            });
-          }, function(err) {
-            res.send(err);
+        //Si no puede actualizar el usuario se debe borrar el evento ya guardado
+        /*
+        Evento.findByIdAndRemove(
+          evento._id
+        ).then(function() {
+          res.json({
+            message: 'No se pudo crear el evento'
           });
-          */
+        }, function(err) {
           res.send(err);
         });
-      }, function(err) {
+        */
         res.send(err);
       });
+    }, function(err) {
+      res.send(err);
+    });
 
   }, function(err) {
     res.send(err);
@@ -78,14 +80,26 @@ router.patch('/:_id', (req, res) => {
 });
 
 
-
 router.delete('/:_id', (req, res) => {
   ReunionSocial.findByIdAndRemove(
     req.params._id
   ).then(function() {
-    res.json({
-      message: 'Successfully deleted ReunionSocial'
-    });
+
+    Usuario.findByIdAndUpdate(req.query._idUsuario, {
+        $pull: {
+          eventos: req.params._id
+
+        }
+      }).then(function() {
+        res.json({
+          message: 'Successfully deleted ReunionSocial'
+        });
+
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+
   }, function(err) {
     res.send(err);
   });

@@ -35,31 +35,31 @@ router.post('/proyecto/:_id', (req, res) => {
   tarea.save().then(function() {
 
     Proyecto.findById(
-        req.params._id
-      ).then(function(proyecto) {
-        //actualiza la referencia al usuario
-        proyecto.tareas.push(tarea._id);
-        proyecto.save().then(function(){
-            res.json(tarea);
-        }, function(err){
+      req.params._id
+    ).then(function(proyecto) {
+      //actualiza la referencia a los proyectos
+      proyecto.tareas.push(tarea._id);
+      proyecto.save().then(function() {
+        res.json(tarea);
+      }, function(err) {
 
-          //Si no puede actualizar el usuario se debe borrar la tarea ya guardada
-          /*
-          Nota.findByIdAndRemove(
-            tarea._id
-          ).then(function() {
-            res.json({
-              message: 'No se pudo crear la tarea'
-            });
-          }, function(err) {
-            res.send(err);
+        //Si no puede actualizar el usuario se debe borrar la tarea ya guardada
+        /*
+        Tarea.findByIdAndRemove(
+          tarea._id
+        ).then(function() {
+          res.json({
+            message: 'No se pudo crear la tarea'
           });
-          */
+        }, function(err) {
           res.send(err);
         });
-      }, function(err) {
+        */
         res.send(err);
       });
+    }, function(err) {
+      res.send(err);
+    });
 
   }, function(err) {
     res.send(err);
@@ -85,31 +85,31 @@ router.post('/etapa/:_id', (req, res) => {
   tarea.save().then(function() {
 
     Etapa.findById(
-        req.params._id
-      ).then(function(etapa) {
-        //actualiza la referencia al usuario
-        etapa.tareas.push(tarea._id);
-        etapa.save().then(function(){
-            res.json(tarea);
-        }, function(err){
+      req.params._id
+    ).then(function(etapa) {
+      //actualiza la referencia a la etapa
+      etapa.tareas.push(tarea._id);
+      etapa.save().then(function() {
+        res.json(tarea);
+      }, function(err) {
 
-          //Si no puede actualizar el usuario se debe borrar la tarea ya guardada
-          /*
-          Nota.findByIdAndRemove(
-            tarea._id
-          ).then(function() {
-            res.json({
-              message: 'No se pudo crear la tarea'
-            });
-          }, function(err) {
-            res.send(err);
+        //Si no puede actualizar el usuario se debe borrar la tarea ya guardada
+        /*
+        Tarea.findByIdAndRemove(
+          tarea._id
+        ).then(function() {
+          res.json({
+            message: 'No se pudo crear la tarea'
           });
-          */
+        }, function(err) {
           res.send(err);
         });
-      }, function(err) {
+        */
         res.send(err);
       });
+    }, function(err) {
+      res.send(err);
+    });
 
   }, function(err) {
     res.send(err);
@@ -132,13 +132,63 @@ router.patch('/:_id', (req, res) => {
 });
 
 
-//DELETE UNA TAREA
+//DELETE UNA TAREA de un proyecto
 
-router.delete('/:_id', (req, res) => {
+router.delete('/proyecto/:_id', (req, res) => {
 
   Tarea.findByIdAndRemove(req.params._id)
     .then(function(tarea) {
-      res.json("Tarea eliminada");
+
+
+
+      Proyecto.findByIdAndUpdate(req.query._idProyecto, {
+          $pull: {
+            tareas: req.params._id
+
+          }
+        }).then(function() {
+
+
+          res.json("Tarea eliminada");
+
+        })
+
+
+        .catch((err) => {
+          res.send(err);
+        });
+
+    }, function(err) {
+      res.send(err);
+    });
+})
+
+
+
+//DELETE UNA TAREA de una etapa
+
+router.delete('/etapa/:_id', (req, res) => {
+
+  Tarea.findByIdAndRemove(req.params._id)
+    .then(function(tarea) {
+
+
+      Etapa.findByIdAndUpdate(req.query._idProyecto, {
+          $pull: {
+            tareas: req.params._id
+
+          }
+        }).then(function() {
+
+
+          res.json("Tarea eliminada");
+
+        })
+
+        .catch((err) => {
+          res.send(err);
+        });
+
     }, function(err) {
       res.send(err);
     });

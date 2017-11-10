@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+
 var Usuario = require('../models/usuario');
 
 
@@ -144,7 +145,7 @@ router.get('/', (req, res) => {
 });
 
 
-//get todos los datos pertenecientes a un usuario especifico, junto con sus respectivas notas y proyectos
+//get todos los datos pertenecientes a un usuario especifico, junto con sus respectivas notas, proyectos y eventos
 router.get('/:_id', (req, res) => {
 
   Usuario.findById(req.params._id)
@@ -257,7 +258,7 @@ router.delete('/:_id', (req, res) => {
     req.params._id
   ).then(function() {
     res.json({
-      message: 'Successfully deleted usuario'
+      message: 'Successfully deleted usuario (sus creaciones persisten)'
     });
   }, function(err) {
     res.send(err);

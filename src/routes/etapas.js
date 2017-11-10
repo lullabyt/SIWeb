@@ -3,7 +3,7 @@ const router = express.Router();
 
 var Etapa = require('../models/etapa');
 var Proyecto = require('../models/proyecto');
-
+var Tarea = require('../models/tarea');
 
 //get todas las etapas
 router.get('/', (req, res) => {
@@ -41,37 +41,41 @@ router.post('/:_id', (req, res) => {
   //una vez creada se guarda en la base de datos
   etapa.save().then(function() {
 
-    Proyecto.findById(
-        req.params._id
-      ).then(function(proyecto) {
-        //actualiza la referencia al usuario
-        proyecto.etapas.push(etapa._id);
-        proyecto.save().then(function(){
-            res.json(etapa);
-        }, function(err){
+    Proyecto.findByIdAndUpdate(req.params._id, {
+        $push: {
+          etapas: etapa._id
 
-          //Si no puede actualizar el usuario se debe borrar la etapa ya guardada
-          /*
-          Etapa.findByIdAndRemove(
-            etapa._id
-          ).then(function() {
-            res.json({
-              message: 'No se pudo crear la etapa'
-            });
-          }, function(err) {
-            res.send(err);
-          });
-          */
-          res.send(err);
-        });
-      }, function(err) {
+        }
+      })
+
+      .then(function() {
+        res.json(etapa);
+
+      })
+      .catch((err) => {
         res.send(err);
+        errorPostEtapa(etapa._id);
       });
 
   }, function(err) {
     res.send(err);
   });
 });
+
+
+const errorPostEtapa = function(idEtapa) {
+  //Si no puede actualizar el usuario se debe borrar la etapa ya guardada
+  Etapa.findByIdAndRemove(
+    idEtapa
+  ).then(function() {
+    res.json({
+      message: 'No se pudo crear la etapa'
+    });
+  }, function(err) {
+    res.send(err);
+  });
+
+};
 
 
 
@@ -93,15 +97,78 @@ router.patch('/:_id', (req, res) => {
 
 
 router.delete('/:_id', (req, res) => {
-  Proyecto.findByIdAndRemove(
+
+  Etapa.findById(
     req.params._id
-  ).then(function() {
-    res.json({
-      message: 'Successfully deleted etapa'
+  ).then(function(etapa) {
+      Tarea.deleteMany({
+        _id: {
+          $in: etapa.tareas
+        }
+
+      }).then(function() {
+
+          Etapa.findByIdAndRemove(
+            req.params._id
+          ).then(function() {
+
+              Proyecto.findByIdAndUpdate(req.query._idProyecto, {
+                  $pull: {
+                    etapas: req.params._id
+
+                  }
+                }).then(function() {
+
+
+                  res.json({
+                    message: 'Successfully deleted etapa'
+                  });
+
+                })
+
+                /*
+                              Proyecto.findById(
+                                  req.query._idProyecto
+                                ).then(function(proyecto) {
+
+                                  //actualiza la referencia a los proyectos
+                                  let index = proyecto.etapas.indexOf(req.params._id);
+                                  if (index > -1) {
+
+                                    proyecto.etapas.splice(index, 1);
+
+                                  }
+
+                                  proyecto.save().then(function() {
+
+
+                                    res.json({
+                                      message: 'Successfully deleted etapa'
+                                    });
+
+                                  })
+
+                    })
+                        */
+                .catch((err) => {
+                  res.send(err);
+                });
+
+            },
+            function(err) {
+              res.send(err);
+            });
+
+        },
+        function(err) {
+          res.send(err);
+        });
+
+    },
+    function(err) {
+      res.send(err);
     });
-  }, function(err) {
-    res.send(err);
-  });
+
 });
 
 

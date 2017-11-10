@@ -33,31 +33,31 @@ router.post('/:_id', (req, res) => {
   nota.save().then(function() {
 
     Usuario.findById(
-        req.params._id
-      ).then(function(usuario) {
-        //actualiza la referencia al usuario
-        usuario.notas.push(nota._id);
-        usuario.save().then(function(){
-            res.json(nota);
-        }, function(err){
+      req.params._id
+    ).then(function(usuario) {
+      //actualiza la referencia al usuario
+      usuario.notas.push(nota._id);
+      usuario.save().then(function() {
+        res.json(nota);
+      }, function(err) {
 
-          //Si no puede actualizar el usuario se debe borrar la nota ya guardada
-          /*
-          Nota.findByIdAndRemove(
-            nota._id
-          ).then(function() {
-            res.json({
-              message: 'No se pudo crear la nota'
-            });
-          }, function(err) {
-            res.send(err);
+        //Si no puede actualizar el usuario se debe borrar la nota ya guardada
+        /*
+        Nota.findByIdAndRemove(
+          nota._id
+        ).then(function() {
+          res.json({
+            message: 'No se pudo crear la nota'
           });
-          */
+        }, function(err) {
           res.send(err);
         });
-      }, function(err) {
+        */
         res.send(err);
       });
+    }, function(err) {
+      res.send(err);
+    });
 
   }, function(err) {
     res.send(err);
@@ -88,7 +88,25 @@ router.delete('/:_id', (req, res) => {
 
   Nota.findByIdAndRemove(req.params._id)
     .then(function(nota) {
-      res.json("Nota eliminada");
+
+
+      Usuario.findByIdAndUpdate(req.query._idUsuario, {
+          $pull: {
+            notas: req.params._id
+
+          }
+        }).then(function() {
+
+          res.json("Nota eliminada");
+
+        })
+
+
+        .catch((err) => {
+          res.send(err);
+        });
+
+
     }, function(err) {
       res.send(err);
     });

@@ -4,7 +4,8 @@ const router = express.Router();
 
 var Proyecto = require('../models/proyecto');
 var Usuario = require('../models/usuario');
-
+var Tarea = require('../models/tarea');
+var Etapa = require('../models/etapa');
 
 
 router.get('/', (req, res) => {
@@ -72,32 +73,32 @@ router.post('/:_id', (req, res) => {
   //una vez creada se guarda en la base de datos
   proyect.save().then(function() {
 
-      Usuario.findById(
-          req.params._id
-        ).then(function(usuario) {
-          //actualiza la referencia al usuario
-          usuario.proyectos.push(proyect._id);
-          usuario.save().then(function(){
-              res.json(proyect);
-          }, function(err){
+    Usuario.findById(
+      req.params._id
+    ).then(function(usuario) {
+      //actualiza la referencia al usuario
+      usuario.proyectos.push(proyect._id);
+      usuario.save().then(function() {
+        res.json(proyect);
+      }, function(err) {
 
-            //Si no puede actualizar el usuario se debe borrar el proyecto ya guardado
-            /*
-            Proyecto.findByIdAndRemove(
-              proyect._id
-            ).then(function() {
-              res.json({
-                message: 'No se pudo crear el proyecto'
-              });
-            }, function(err) {
-              res.send(err);
-            });
-            */
-            res.send(err);
+        //Si no puede actualizar el usuario se debe borrar el proyecto ya guardado
+        /*
+        Proyecto.findByIdAndRemove(
+          proyect._id
+        ).then(function() {
+          res.json({
+            message: 'No se pudo crear el proyecto'
           });
         }, function(err) {
           res.send(err);
         });
+        */
+        res.send(err);
+      });
+    }, function(err) {
+      res.send(err);
+    });
 
   }, function(err) {
     res.send(err);
@@ -124,15 +125,68 @@ router.patch('/:_id', (req, res) => {
 
 
 router.delete('/:_id', (req, res) => {
-  Proyecto.findByIdAndRemove(
+
+  Proyecto.findById(
     req.params._id
-  ).then(function() {
-    res.json({
-      message: 'Successfully deleted proyecto'
+  ).then(function(proyecto) {
+
+      Tarea.remove({
+        _id: {
+          $in: proyecto.tareas
+        }
+
+      }).then(function() {
+
+          Etapa.remove({
+            _id: {
+              $in: proyecto.etapas
+            }
+          }).then(function() {
+
+
+              Proyecto.findByIdAndRemove(
+                req.params._id
+              ).then(function() {
+
+                Usuario.findByIdAndUpdate(req.query._idUsuario, {
+                    $pull: {
+                      proyectos: req.params._id
+
+                    }
+                  }).then(function() {
+
+
+                    res.json({
+                      message: 'Successfully deleted proyecto'
+                    });
+
+
+                  })
+
+                  .catch((err) => {
+                    res.send(err);
+                  });
+
+
+              }, function(err) {
+                res.send(err);
+              });
+
+            },
+            function(err) {
+              res.send(err);
+            });
+        },
+        function(err) {
+          res.send(err);
+        });
+
+    },
+    function(err) {
+      res.send(err);
     });
-  }, function(err) {
-    res.send(err);
-  });
+
+
 });
 
 

@@ -2,7 +2,11 @@
 const express = require('express');
 const path = require('path');
 const http = require('http');
+const https = require('https')
+const VariablesGlobales = require('./src/utiles/variablesGlobales');
+
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 const passport = require('passport');
 const flash = require('connect-flash-plus');
@@ -10,6 +14,27 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
 const app = express();
+
+
+//
+// SSL Certificates
+//
+var certsPath = path.join(__dirname, 'src/certs', 'server');
+var caCertsPath = path.join(__dirname, 'src/certs', 'ca');
+
+var options = {
+  key: fs.readFileSync(path.join(certsPath, 'my-server.key.pem'))
+    // This certificate should be a bundle containing your server certificate and any intermediates
+    // cat certs/cert.pem certs/chain.pem > certs/server-bundle.pem
+    ,
+  cert: fs.readFileSync(path.join(certsPath, 'my-server.crt.pem'))
+    // ca only needs to be specified for peer-certificates
+    //, ca: [ fs.readFileSync(path.join(caCertsPath, 'my-root-ca.crt.pem')) ]
+    ,
+  requestCert: false,
+  rejectUnauthorized: true
+};
+
 
 
 // Get our API routes
@@ -106,18 +131,67 @@ app.get('*', (req, res) => {
   })
 });
 
-/**
- * Get port from environment and store in Express.
- */
-const port = process.env.PORT || '3000';
-app.set('port', port);
 
 /**
  * Create HTTP server.
  */
-const server = http.createServer(app);
+//const server = http.createServer(app);
+
+
+//
+// Serve an Express App securely with HTTPS
+//
+const server = https.createServer(options);
+const host = VariablesGlobales.IP;
+
+
+/**
+ * Get port from environment and store in Express.
+ */
+var port = process.env.PORT || '8000';
+
+app.set('port', port);
+app.set('server', server);
+app.set('host', host);
+
+
+function listen(app) {
+  server.on('request', app);
+  server.listen(port, function() {
+    port = server.address().port;
+    //console.log('Listening on https://127.0.0.1:' + port);
+    console.log('API running on https://localhost:' + port);
+
+  });
+}
+
+// publicDir = path.join(__dirname, 'public');
+//var app = require('./app').create(server, host, port, publicDir);
+listen(app);
+
+
+//
+// Redirect HTTP ot HTTPS
+//
+// This simply redirects from the current insecure location to the encrypted location
+//
+var insecurePort = process.argv[3] || '3000';
+var insecureServer = http.createServer();
+
+insecureServer.on('request', function(req, res) {
+
+  res.setHeader(
+    'Location', 'https://' + req.headers.host.replace(/:\d+/, ':' + port) + req.url
+  );
+  res.statusCode = 302;
+  res.end();
+});
+insecureServer.listen(insecurePort, function() {
+  console.log("\nRedirecting all http traffic to https\n");
+});
+
 
 /**
  * Listen on provided port, on all network interfaces.
  */
-server.listen(port, () => console.log(`API running on localhost:${port}`));
+//server.listen(port, () => console.log(`API running on localhost:${port}`));
