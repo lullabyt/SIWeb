@@ -8,7 +8,7 @@ Facultad de Informática - UNCO
 
 ## Instrucciones
 
-Si es la primera vez correr `npm install` desde la carpeta, luego solo basta con el comando `node app` para lanzar el servidor y que se puedan probar todas las rutas (ej: https://localhost:8000/api).
+Si es la primera vez correr `npm install` desde la carpeta, luego solo basta con ejecutar el comando `node app` con una instancia de MongoDB abierta, para lanzar el servidor y que se puedan probar todas las rutas (ej: https://localhost:8000/api).
 
 
 ## Nota importante
