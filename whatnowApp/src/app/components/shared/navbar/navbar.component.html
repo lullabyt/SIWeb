@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-barra" style="margin-bottom:40px;">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <button class="navbar-brand" (click)="_toggleSidebar()">Menu</button>
+
+
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+      <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Tareas
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <!--  <a class="dropdown-item drop-link" [routerLink]="['wizardAsignarPersonal']" routerLinkActive="active" >Asignar personal</a>
+                <a class="dropdown-item drop-link" [routerLink]="['wizardTipoPiezaInspeccionada']" routerLinkActive="active">Tipo pieza más inspeccionada</a>
+                <a class="dropdown-item drop-link" [routerLink]="['wizardTrabajosSupervisadosEmpleado']" routerLinkActive="active">Trabajos supervisados</a>-->
+              </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link link disabled" > Trabajos </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" > Acerca de </a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2 " type="text" placeholder="Buscar" aria-label="Buscar">
+      <button class="btn  my-2 my-sm-0 disabled" type="submit">Buscar</button>
+    </form>
+  </div>
+</nav>
+
+
+<!-- Container for sidebar(s) + page content -->
+<ng-sidebar-container>
+
+  <!-- A sidebar -->
+  <ng-sidebar
+        [(opened)]="_opened"
+        [mode]="_mode"
+        [sidebarClass]="'app-sidebar'"
+        [ariaLabel]="'My sidebar'">
+
+    <p>Sidebar contents</p>
+
+    <button class="app-control" (click)="_toggleSidebar()">Close sidebar</button>
+    <p><a closeSidebar>This will close the sidebar too</a></p>
+    <hr>
+            <p>Throwup on your pillow.</p>
+            <p>Steal the warm chair right after you get up.</p>
+            <p>Use lap as chair hide head under blanket.</p>
+            <p>Walk on car leaving trail of paw prints on hood.</p>
+            <p>Steal the warm chair right after you get up.</p>
+
+  </ng-sidebar>
+
+  <!-- Page content
+  <div ng-sidebar-content>
+    <header class="app-header">
+         <button (click)="_toggleSidebar()" class="app-header__toggle">Toggle sidebar</button>
+         <span>ng-sidebar</span>
+    </header>
+    <router-outlet></router-outlet>
+  </div>-->
+
+</ng-sidebar-container>
