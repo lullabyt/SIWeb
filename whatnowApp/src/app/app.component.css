@@ -31,24 +31,30 @@ app {
   margin-right: 1rem;
   position: relative;
   width: 2rem;
-  &::after {
-    background: #fff;
-    content: '';
-    height: 0.15rem;
-    left: 0;
-    margin-top: -0.075rem;
-    position: absolute;
-    top: 50%;
-    width: 100%;
-  }
+}
+
+.app-header__toggle::after {
+  background: #fff;
+  content: '';
+  height: 0.15rem;
+  left: 0;
+  margin-top: -0.075rem;
+  position: absolute;
+  top: 50%;
+  width: 100%;
 }
 
 .app-sidebar {
   background-color: #fff;
   padding: 2em 1em;
-  &.ng-sidebar--opened.ng-sidebar--over {
-    box-shadow: 0 0 2.5em rgba(85, 85, 85, 0.5);
-  }
+}
+
+>>>ng-sidebar--opened {
+  box-shadow: 0 0 2.5em rgba(85, 85, 85, 0.5);
+}
+
+>>>ng-sidebar--over {
+  box-shadow: 0 0 2.5em rgba(85, 85, 85, 0.5);
 }
 
 .app-contents {
@@ -62,10 +68,11 @@ app {
   margin-bottom: 0.5em;
   padding: 0.5em 2em;
   transition: background-color 0.15s;
-  &:hover {
-    background-color: #545555;
-    color: #fff;
-  }
+}
+
+.app-control:hover {
+  background-color: #545555;
+  color: #fff;
 }
 
 * {
@@ -93,9 +100,10 @@ body {
 a {
   color: #0273d4;
   text-decoration: none;
-  &:hover {
-    border-bottom: 1px dotted #0273d4;
-  }
+}
+
+a:hover {
+  border-bottom: 1px dotted #0273d4;
 }
 
 p {
