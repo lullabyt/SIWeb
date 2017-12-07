@@ -6,16 +6,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //services
 import { AsignarPersonalService } from './services/asignarPersonal.service';
+import { AuthenticationService } from './services/authentication.service';
+
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { BienvenidaComponent } from './components/bienvenida/bienvenida.component';
 import { PageNotFoundComponent } from './not-found.component';
 
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
 import { SidebarModule } from 'ng-sidebar';
+
+import { BienvenidaComponent } from './components/bienvenida/bienvenida.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { InicioComponent } from './components/inicio/inicio.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +29,10 @@ import { SidebarModule } from 'ng-sidebar';
     PageNotFoundComponent,
     BienvenidaComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    LoginComponent,
+    SignupComponent,
+    InicioComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +43,10 @@ import { SidebarModule } from 'ng-sidebar';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [AsignarPersonalService],
+  providers: [
+    AsignarPersonalService,
+    AuthenticationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

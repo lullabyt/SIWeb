@@ -6,12 +6,14 @@
   <ng-sidebar
         [(opened)]="_opened"
         [mode]="_mode"
-        [sidebarClass]="'app-sidebar'"
+        [sidebarClass]="'sidebar'"
         [ariaLabel]="'My sidebar'">
 
-    <p>Sidebar contents</p>
-
-    <button class="app-control" (click)="_toggleSidebar()">Close sidebar</button>
+  <div style="text-align:center;">
+      <br>
+    <img src="../../assets/img/logo.png" class="img-fluid mx-auto d-block" alt="logo no encontrado">
+      <br>
+    <button class="control" (click)="_toggleSidebar()">Close sidebar</button>
     <p><a closeSidebar>This will close the sidebar too</a></p>
     <hr>
             <p>Throwup on your pillow.</p>
@@ -19,14 +21,15 @@
             <p>Use lap as chair hide head under blanket.</p>
             <p>Walk on car leaving trail of paw prints on hood.</p>
             <p>Steal the warm chair right after you get up.</p>
+  </div>
 
   </ng-sidebar>
 
-  
+
   <div ng-sidebar-content>
-    <header class="app-header">
-         <button (click)="_toggleSidebar()" class="app-header__toggle">Toggle sidebar</button>
-         <span>ng-sidebar</span>
+    <header class="header">
+         <button (click)="_toggleSidebar()" class="header__toggle">Toggle sidebar</button>
+         <span>Menu</span>
     </header>
     <router-outlet></router-outlet>
   </div>

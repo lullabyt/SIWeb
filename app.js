@@ -105,7 +105,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 
 // Point static path to dist
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'WhatNowApp/dist')));
 
 
 // Set our api routes
@@ -125,10 +125,10 @@ app.use('/api/usuarios', usuarios);
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
   //Agregar cuando este angular!!
-  //res.sendFile(path.join(__dirname, 'dist/index.html'));
-  res.json({
+  res.sendFile(path.join(__dirname, 'WhatNowApp/dist/index.html'));
+  /*res.json({
     message: 'Aqui no hay nada!'
-  })
+  })*/
 });
 
 
@@ -148,7 +148,7 @@ const host = VariablesGlobales.IP;
 /**
  * Get port from environment and store in Express.
  */
-var port = process.env.PORT || '8000';
+var port = process.env.PORT || '8080';
 
 app.set('port', port);
 app.set('server', server);

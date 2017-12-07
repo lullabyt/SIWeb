@@ -28,7 +28,9 @@ router.post('/signup', function(req, res, next) {
       });
 
     }
-
+    console.log(req);
+    console.log(req.body);
+    console.log("aaasss2" + req.body.password);
     var newUser = new Usuario(req.body);
 
     //una vez creada se guarda en la base de datos
@@ -42,11 +44,12 @@ router.post('/signup', function(req, res, next) {
       // a response."
       // Source: http://passportjs.org/docs
       // ***********************************************************************
-
+      console.log("aaa" + req.body);
       req.login(newUser, loginErr => {
         if (loginErr) {
           return next(loginErr);
         }
+        console.log(req.body);
         return res.send({
           success: true,
           message: 'signup succeeded',
