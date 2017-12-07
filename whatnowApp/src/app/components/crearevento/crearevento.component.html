@@ -1,0 +1,117 @@
+
+  <div class="col-md-6 formEvento">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputName">Nombre</label>
+              <input type="email" class="form-control" id="inputName" placeholder="Nombre" name="nombre" ngModel required #nombre="ngModel">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Tipo</label>
+                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="tipo">
+                  <option>Reunión laboral</option>
+                  <option>Reunión social</option>
+                  <option>Cita médica</option>
+                  <option>Evento académico</option>
+                  <option>Otro</option>
+                </select>
+            </div>
+          </div>
+              <!-- Atributos que varían segun el tipo de evento-->
+              <!-- Cita medica-->
+            <div *ngIf="tipo=='Cita médica'">
+              <div class="form-row" >
+                <div class="form-group col-md-6">
+                  <label for="inputDoctor">Nombre del profesional</label>
+                  <input type="text" class="form-control" id="inputDoctor" placeholder="Nombre del profesional" [(ngModel)]="nombreEspecialista">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputEspecialidad">Especialidad</label>
+                  <input type="text" class="form-control" id="inputEspecialidad" placeholder="Especialidad" [(ngModel)]="especialidad">
+                </div>
+              </div>
+              <div class="form-row" >
+                <div class="form-group col-md-6">
+                  <label for="inputConsulta">Tipo de Consulta</label>
+                  <input type="text" class="form-control" id="inputConsulta" placeholder="Tipo de consulta" [(ngModel)]="tipoConsulta">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputTel">Teléfono de contacto</label>
+                  <input type="text" class="form-control" id="inputTel" placeholder="teléfono" [(ngModel)]="telefono">
+                </div>
+              </div>
+            </div>
+            <!-- Evento académico-->
+            <div *ngIf="tipo=='Evento académico'">
+              <div class="form-row" >
+                <div class="form-group col-md-6">
+                  <label for="inputType">Tipo</label>
+                  <input type="text" class="form-control" id="inputType" placeholder="Tipo de evento académico" [(ngModel)]="tipoAcademico">
+                </div>
+              </div>
+            </div>
+            <!-- Reunión Laboral-->
+            <div *ngIf="tipo=='Reunión laboral'">
+              <div class="form-row" >
+                <div class="form-group col-md-6">
+                  <label for="inputParticipantes">Participantes</label>
+                  <input type="text" class="form-control" id="inputParticipantes" placeholder="Participantes de la reunión" [(ngModel)]="participantes">
+                </div>
+              </div>
+            </div>
+            <!-- Reunión Laboral-->
+            <div *ngIf="tipo=='Reunión social'">
+              <div class="form-row" >
+                <div class="form-group col-md-6">
+                  <label for="inputMoney">Dinero necesario</label>
+                  <input type="text" class="form-control" id="inputMoney" placeholder="Dinero necesario" [(ngModel)]="dinero">
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="form-row">
+                  <div class="row margin-top margin-bottom">
+                      <div class="form-group col-md-6">
+                          <mat-form-field>
+                          <input matInput [max]="selectedDateTo" [matDatepicker]="pickerFrom" placeholder="Fecha de inicio..." [(ngModel)]="selectedDateFrom">
+                          <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                          <mat-datepicker #pickerFrom ></mat-datepicker>
+                          </mat-form-field>
+
+                        </div>
+                        <div class="form-group col-md-6">
+                          <mat-form-field>
+                          <input matInput [min]="selectedDateFrom" [matDatepicker]="pickerTo" placeholder="Fecha de fin..." [(ngModel)]="selectedDateTo">
+                          <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                          <mat-datepicker #pickerTo ></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                    </div>
+            </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="exampleFormControlTextarea1"> Descripción </label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="descripcion"></textarea>
+              </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputStreet">Calle</label>
+              <input type="text" class="form-control" id="inputStreet" placeholder="Calle" [(ngModel)]="calle">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputNum">Altura</label>
+              <input type="text" class="form-control" id="inputNum" placeholder="Altura" [(ngModel)]="altura">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputCity">Localidad</label>
+              <input type="text" class="form-control" id="inputCity" [(ngModel)]="localidad">
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary" (click)="crearEvento()">Crear</button>
+
+  </div>

@@ -5,6 +5,7 @@ import { BienvenidaComponent } from './components/bienvenida/bienvenida.componen
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { InicioComponent } from './components/inicio/inicio.component';
+import { CreareventoComponent } from './components/crearevento/crearevento.component';
 import { PageNotFoundComponent } from './not-found.component';
 
 
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'inicio', component: InicioComponent },
+  { path: 'crearEvento', component: CreareventoComponent },
   //{ path: 'wizardAsignarPersonal', component: WizardAsignarPersonalComponent },
   //{ path: 'wizardTipoPiezaInspeccionada', component: WizardTipoPiezaInspeccionadaComponent },
   //{ path: 'wizardTrabajosSupervisadosEmpleado', component: WizardTrabajosSupervisadosEmpleadoComponent },

@@ -1,0 +1,18 @@
+.formEvento {
+  padding: 25px;
+}
+
+.margin-top {
+  margin-top: 30px;
+}
+
+.margin-bottom {
+  margin-bottom: 20px;
+}
+
+.boton {
+  margin: 5px;
+  background-color: #b2c2bf;
+  margin-bottom: 30px;
+  float: right;
+}
