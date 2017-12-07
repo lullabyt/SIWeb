@@ -1,0 +1,16 @@
+.content-block-nopad {
+  margin-top: 6em;
+  align-items: center;
+  background: #0273d4;
+  color: #fff;
+  display: flex;
+  padding: 1em;
+  z-index: 100;
+  width: 100% !important;
+}
+
+.container-foot {
+  text-align: center;
+  margin-top: 2em;
+  margin-bottom: -2em;
+}

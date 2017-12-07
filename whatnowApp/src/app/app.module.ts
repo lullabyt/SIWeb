@@ -50,13 +50,15 @@ import { PageNotFoundComponent } from './not-found.component';
 
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
+import { FooterComponent } from './components/shared/footer/footer.component';
 import { SidebarModule } from 'ng-sidebar';
-import { CreareventoComponent } from './components/crearevento/crearevento.component';
 
+import { CreareventoComponent } from './components/crearevento/crearevento.component';
 import { BienvenidaComponent } from './components/bienvenida/bienvenida.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { InicioComponent } from './components/inicio/inicio.component';
+
 
 @NgModule({
   exports: [
@@ -104,8 +106,9 @@ export class MaterialModule { }
     SidebarComponent,
     LoginComponent,
     SignupComponent,
-    InicioComponent
-    CreareventoComponent
+    InicioComponent,
+    CreareventoComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -114,8 +117,9 @@ export class MaterialModule { }
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    AppRoutingModule,
     MaterialModule,
+    AppRoutingModule
+
   ],
   providers: [
     AsignarPersonalService,

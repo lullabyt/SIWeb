@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { DateAdapter, NativeDateAdapter } from '@angular/material';
+
+
+//sweet alert
 import swal from 'sweetalert2';
 
 @Component({
@@ -10,40 +14,50 @@ export class CreareventoComponent implements OnInit {
 
   private selectedDateFrom: Date = null;
   private selectedDateTo: Date = null;
-  private descripcion: String ="";
-  private nombre: String="";
-  private calle: String="";
-  private altura: String="";
-  private localidad: String="";
-  private tipo: String="";
+  private descripcion: String = "";
+  private nombre: String;
+  private calle: String;
+  private altura: String;
+  private localidad: String;
+  private tipo: String;
 
-  private nombreEspecialista: String="";
-  private especialidad: String="";
-  private telefono: String="";
-  private tipoConsulta: String="";
+  private nombreEspecialista: String = "";
+  private especialidad: String = "";
+  private telefono: String = "";
+  private tipoConsulta: String = "";
 
-  private tipoAcademico: String="";
+  private tipoAcademico: String = "";
 
-  private participantes: String="";
+  private participantes: String = "";
 
-  private dinero: String="";
+  private dinero: String = "";
 
-  constructor() { }
+  constructor(private dateAdapter: DateAdapter<NativeDateAdapter>
+  ) {
+    dateAdapter.setLocale('es-ES');
+  }
 
   ngOnInit() {
   }
 
-  crearEvento(){
+  crearEvento() {
 
     swal({
-          title: 'Listo!',
-          text: 'Evento creado',
-          type: 'success',
-          confirmButtonText: 'Ok',
-          confirmButtonColor: '#3b3a30',
-          allowOutsideClick: false,
-          allowEscapeKey: false
-        });
+      title: 'Listo!',
+      text: 'Evento creado',
+      type: 'success',
+      confirmButtonText: 'Ok',
+      confirmButtonColor: '#3b3a30',
+      allowOutsideClick: false,
+      allowEscapeKey: false
+    });
+
+  }
+
+  formCompletado() {
+    if (this.nombre && this.calle && this.altura && this.localidad && this.tipo) {
+      return true;
+    } else { return false; }
 
   }
 

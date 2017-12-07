@@ -7,7 +7,7 @@ import { Component, AnimationTransitionEvent } from '@angular/core';
 })
 export class SidebarComponent {
   title = 'sidebar';
-
+  img = 'calendar.jpg';
   private _opened: boolean = true;
   private _mode = 'push';
 
@@ -15,4 +15,9 @@ export class SidebarComponent {
     this._opened = !this._opened;
   }
 
+  private setBackground() {
+    return {
+      'background-image': 'url(assets/img/' + this.img + ')'
+    }
+  }
 }
