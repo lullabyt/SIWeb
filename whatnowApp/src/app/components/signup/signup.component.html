@@ -52,6 +52,6 @@
 
     <span>{{errorMsg}}</span>
     <button *ngIf="!formCompletado()" class="btn waves-effect waves-light" type="submit" name="action" disabled>Crear cuenta</button>
-    <button *ngIf="formCompletado()" (click)="login()" [routerLink]="['/bienvenida']" routerLinkActive="active" class="btn waves-effect waves-light" type="submit" name="action">Crear cuenta</button>
+    <button *ngIf="formCompletado()" (click)="signup()" class="btn waves-effect waves-light" type="submit" name="action">Crear cuenta</button>
   </div>
 </div>

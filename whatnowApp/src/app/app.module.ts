@@ -40,7 +40,7 @@ import {
 
 //services
 import { AsignarPersonalService } from './services/asignarPersonal.service';
-import { AuthenticationService } from './services/authentication.service';
+import { AuthenticationService } from './services/auth/authentication.service';
 
 
 import { AppComponent } from './app.component';

@@ -6,36 +6,54 @@
 
     <div style="text-align:center;">
       <br>
-      <img src="../../assets/img/logo.png" class="img-fluid mx-auto d-block" alt="logo no encontrado">
+      <img src="../../assets/img/logo.png" class="img-fluid mx-auto d-block" alt="logo no encontrado" [routerLink]="['bienvenida']" routerLinkActive="active">
       <br>
       <br>
       <!--<p><a closeSidebar>This will close the sidebar too</a></p>-->
       <hr>
       <br>
-      <p> <a [routerLink]="['bienvenida']" routerLinkActive="active">Inicio</a></p>
-      <hr>
-      <br>
-      <p> <a [routerLink]="['bienvenida']" routerLinkActive="active">Mi cuenta</a></p>
-      <hr>
-      <br>
-      <p> <a [routerLink]="['crearEvento']" routerLinkActive="active">Eventos</a></p>
-      <hr>
-      <br>
-      <p> <a [routerLink]="['bienvenida']" routerLinkActive="active">Notas</a></p>
-      <hr>
-      <br>
-      <p> <a [routerLink]="['bienvenida']" routerLinkActive="active">Proyectos</a></p>
-      <hr>
-      <br>
-      <p> <a [routerLink]="['bienvenida']" routerLinkActive="active">Mapa</a></p>
-      <hr>
-      <br>
-      <p> <a [routerLink]="['bienvenida']" routerLinkActive="active">Calendario</a></p>
-      <hr>
-      <hr>
-      <br>
-      <br>
-      <button class="control" [routerLink]="['bienvenida']" routerLinkActive="active">Cerrar sesión</button>
+      <div *ngIf="isLoggedIn()">
+
+        <p> <a [routerLink]="['inicio']" routerLinkActive="active">Inicio</a></p>
+        <hr>
+        <br>
+        <p> <a [routerLink]="['inicio']" routerLinkActive="active">Mi cuenta</a></p>
+        <hr>
+        <br>
+        <p> <a [routerLink]="['crearEvento']" routerLinkActive="active">Eventos</a></p>
+        <hr>
+        <br>
+        <p> <a [routerLink]="['inicio']" routerLinkActive="active">Notas</a></p>
+        <hr>
+        <br>
+        <p> <a [routerLink]="['inicio']" routerLinkActive="active">Proyectos</a></p>
+        <hr>
+        <br>
+        <p> <a [routerLink]="['inicio']" routerLinkActive="active">Mapa</a></p>
+        <hr>
+        <br>
+        <p> <a [routerLink]="['inicio']" routerLinkActive="active">Calendario</a></p>
+        <hr>
+        <hr>
+        <br>
+        <br>
+        <button class="control" (click)="logout()">Cerrar sesión</button>
+
+      </div>
+      <div *ngIf="!isLoggedIn()">
+
+        <p> <a [routerLink]="['bienvenida']" routerLinkActive="active">Bienvenida</a></p>
+        <hr>
+        <br>
+        <p> <a [routerLink]="['signup']" routerLinkActive="active">Crea tu cuenta!</a></p>
+        <hr>
+        <hr>
+        <br>
+        <br>
+        <button class="control" [routerLink]="['login']" routerLinkActive="active"><a>Login</a></button>
+
+      </div>
+
     </div>
 
   </ng-sidebar>
@@ -44,7 +62,7 @@
   <div ng-sidebar-content>
     <header class="header">
       <button (click)="_toggleSidebar()" class="header__toggle">Toggle sidebar</button>
-      <span>Menu</span>
+      <span (click)="_toggleSidebar()"> Menu</span>
     </header>
     <router-outlet></router-outlet>
 

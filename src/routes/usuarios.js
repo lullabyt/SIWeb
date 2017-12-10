@@ -24,13 +24,11 @@ router.post('/signup', function(req, res, next) {
     if (user) {
       return res.send({
         success: false,
-        message: 'That email is already taken.'
+        message: 'Ese email ya ha sido tomado.'
       });
 
     }
-    console.log(req);
-    console.log(req.body);
-    console.log("aaasss2" + req.body.password);
+
     var newUser = new Usuario(req.body);
 
     //una vez creada se guarda en la base de datos
@@ -44,12 +42,12 @@ router.post('/signup', function(req, res, next) {
       // a response."
       // Source: http://passportjs.org/docs
       // ***********************************************************************
-      console.log("aaa" + req.body);
+
       req.login(newUser, loginErr => {
         if (loginErr) {
           return next(loginErr);
         }
-        console.log(req.body);
+
         return res.send({
           success: true,
           message: 'signup succeeded',
@@ -82,7 +80,7 @@ router.post('/login', function(req, res, next) {
     if (!user) {
       return res.send({
         success: false,
-        message: 'authentication failed'
+        message: info
       });
     }
     // ***********************************************************************
@@ -97,7 +95,8 @@ router.post('/login', function(req, res, next) {
       }
       return res.send({
         success: true,
-        message: 'authentication succeeded'
+        message: 'authentication succeeded',
+        user: user
       });
     });
   })(req, res, next);
@@ -108,7 +107,7 @@ router.post('/login', function(req, res, next) {
 router.get('/logout', isLoggedIn, function(req, res) {
 
   req.logout();
-  //  req.flash('success_msg', 'You are logged out.')
+  req.flash('success_msg', 'You are logged out.')
   //  res.redirect('/');
 
   res.send({
@@ -132,7 +131,7 @@ function isLoggedIn(req, res, next) {
 
   res.send({
     success: false,
-    message: 'not logged in'
+    message: 'Not logged in'
   });
 }
 

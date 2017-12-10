@@ -66,7 +66,6 @@ var usuarioSchema = new Schema({
 //manejo de contraseña post
 usuarioSchema.pre('validate', function(next) {
   var user = this;
-  console.log("hey");
   // only hash the password if it has been modified (or is new)
   if (!user.isModified('password')) return next();
 
