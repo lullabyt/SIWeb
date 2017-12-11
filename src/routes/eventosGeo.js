@@ -30,7 +30,7 @@ router.get('/usuario/:_id', (req, res) => {
 });
 
 router.post('/:_id', (req, res) => {
-
+console.log("ESTA EN ELS ERVIDORRRRR");
   var evento = new EventoGeo(
 
     req.body

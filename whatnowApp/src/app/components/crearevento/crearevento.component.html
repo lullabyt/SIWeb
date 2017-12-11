@@ -119,7 +119,7 @@
       </div>
       <div class="form-group col-md-6">
         <button *ngIf="!formCompletado()" class="btn waves-effect waves-light" type="submit" name="action" disabled>Crear</button>
-        <button *ngIf="formCompletado()" (click)="crearEvento()" [routerLink]="['/bienvenida']" routerLinkActive="active" class="btn waves-effect waves-light" type="submit" name="action">Login</button>
+        <button *ngIf="formCompletado()" (click)="crearEventoInicial(tipo)" [routerLink]="['/bienvenida']" routerLinkActive="active" class="btn waves-effect waves-light" type="submit" name="action">Crear</button>
       </div>
     </div>
 

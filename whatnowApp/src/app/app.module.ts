@@ -39,8 +39,8 @@ import {
 
 
 //services
-import { AsignarPersonalService } from './services/asignarPersonal.service';
 import { AuthenticationService } from './services/authentication.service';
+import {EventoService} from './services/evento.service';
 
 
 import { AppComponent } from './app.component';
@@ -122,8 +122,8 @@ export class MaterialModule { }
 
   ],
   providers: [
-    AsignarPersonalService,
-    AuthenticationService
+    AuthenticationService,
+    EventoService
   ],
   bootstrap: [AppComponent]
 })
