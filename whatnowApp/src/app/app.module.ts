@@ -37,6 +37,7 @@ import {
   MatStepperModule
 } from '@angular/material';
 
+import { AgmCoreModule } from '@agm/core';
 
 //services
 import { AuthenticationService } from './services/auth/authentication.service';
@@ -116,6 +117,10 @@ export class MaterialModule { }
     MapaComponent
   ],
   imports: [
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyCePtdONf9QH13km56WgDWeMuZIsVVsIoY",
+      libraries: ["places"]
+    }),
     BrowserModule,
     SidebarModule.forRoot(),
     BrowserAnimationsModule,

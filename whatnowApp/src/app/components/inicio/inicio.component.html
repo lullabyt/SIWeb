@@ -5,5 +5,13 @@
     <h1>Inicio!</h1>
   </div>
   <!--<img src="../../assets/img/logo.jpg" class="img-fluid mx-auto d-block" alt="logo"> -->
-
+  <div class="container">
+    <h4>Autocompletador de lugares</h4>
+    <div class="form-group">
+      <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+    </div>
+    <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+      <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+    </agm-map>
+  </div>
 </div>

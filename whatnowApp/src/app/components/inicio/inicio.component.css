@@ -3,3 +3,7 @@
   padding: 25px;
   color: #3b3a30;
 }
+
+agm-map {
+  height: 300px;
+}
