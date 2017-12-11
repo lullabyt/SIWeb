@@ -52,7 +52,7 @@ export class AuthenticationService {
       .then(res => {
         console.log(res.json());
         if (res.json().success) {
-          this.user = res.json().user;
+          this.user = res.json().newUser;
         }
         return res.json();
       })
