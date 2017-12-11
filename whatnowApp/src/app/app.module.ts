@@ -39,7 +39,7 @@ import {
 
 
 //services
-import { AuthenticationService } from './services/authentication.service';
+import { AuthenticationService } from './services/auth/authentication.service';
 import {EventoService} from './services/evento.service';
 
 

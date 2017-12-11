@@ -125,36 +125,46 @@ var Pass = function(passport) {
       // find a user whose email is the same as the forms email
       // we are checking to see if the user trying to login already exists
       User.findOne({
-        'email': email
-      }).then(function(user) {
+          'email': email
+        }).populate(
+          'notas proyectos')
+        .populate(
+          'eventos.item')
+        .then(function(user) {
 
-          // if no user is found, return the message
-          if (!user) {
-            return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
-          }
+            // if no user is found, return the message
+            if (!user) {
+              req.flash('loginMessage', 'No user found.');
+              return done(null, false, 'Ningun usuario encontrado.'); // req.flash is the way to set flashdata using connect-flash
+            } else {
 
-          // test a matching password
-          user.comparePassword(password, function(err, isMatch) {
-            if (err) throw err;
+              // test a matching password
+              user.comparePassword(password, function(err, isMatch) {
+                if (err) throw err;
 
-            if (!isMatch) {
+                if (!isMatch) {
+                  req.flash('loginMessage', 'Oops! Wrong password.');
+                  return done(null, false, 'Contraseña equivocada.'); // create the loginMessage and save it to session as flashdata
 
-              return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+                  /*
+                          // if the user is found but the password is wrong
+                          if (!user.comparePassword(req.body.password)){
+                          */
+                } else {
+                  // all is well, return successful user
+                  return done(null, user);
 
-              /*
-                      // if the user is found but the password is wrong
-                      if (!user.comparePassword(req.body.password)){
-                      */
+                }
+
+              });
+
             }
 
+          },
+          function(err) {
+            // if there are any errors, return the error
+            return done(err);
           });
-          // all is well, return successful user
-          return done(null, user);
-        },
-        function(err) {
-          // if there are any errors, return the error
-          return done(err);
-        });
 
     }));
 
