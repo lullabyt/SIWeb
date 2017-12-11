@@ -41,6 +41,7 @@ import {
 //services
 import { AuthenticationService } from './services/auth/authentication.service';
 import {EventoService} from './services/evento.service';
+import {NotasService} from './services/notas.service';
 
 
 import { AppComponent } from './app.component';
@@ -58,6 +59,7 @@ import { BienvenidaComponent } from './components/bienvenida/bienvenida.componen
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { InicioComponent } from './components/inicio/inicio.component';
+import { NotasComponent } from './components/notas/notas.component';
 
 
 @NgModule({
@@ -108,7 +110,8 @@ export class MaterialModule { }
     SignupComponent,
     InicioComponent,
     CreareventoComponent,
-    FooterComponent
+    FooterComponent,
+    NotasComponent
   ],
   imports: [
     BrowserModule,
@@ -123,7 +126,8 @@ export class MaterialModule { }
   ],
   providers: [
     AuthenticationService,
-    EventoService
+    EventoService,
+    NotasService
   ],
   bootstrap: [AppComponent]
 })

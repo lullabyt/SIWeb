@@ -8,6 +8,8 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { CreareventoComponent } from './components/crearevento/crearevento.component';
+import { NotasComponent } from './components/notas/notas.component';
+
 import { PageNotFoundComponent } from './not-found.component';
 
 
@@ -43,6 +45,9 @@ const routes: Routes = [
       },
       {
         path: 'crearEvento', component: CreareventoComponent
+      },
+      {
+        path: 'notas', component: NotasComponent
       },
       {
         path: '', redirectTo: '/inicio', pathMatch: 'full'

@@ -1,0 +1,17 @@
+<div class="container-fluid">
+  <div class="titulo">
+    <h1>Mis Notas</h1>
+  </div>
+</div>
+<div class="card-columns">
+  <div class="card" *ngFor="let nota of notas; let i = index">
+      <div class="card-header">Estado: {{nota.estado}}</div>
+      <div class="card-body">
+        <h4 class="card-title"> {{nota.titulo}} </h4>
+        <p class="card-text"> {{nota.contenido}} </p>
+        <p class="card-text"> Tipo: {{nota.tipo}} </p>
+        <p class="card-text"> Criticidad: {{nota.criticidad}} </p>
+       <button (click)="eliminar(nota._id)" type="button" class="btn btn-outline-primary "> Eliminar</button>
+      </div>
+    </div>
+</div>

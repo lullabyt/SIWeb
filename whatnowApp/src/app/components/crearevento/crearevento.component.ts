@@ -93,7 +93,7 @@ crearEvento(){
                   console.log(evento);
                   swal({
                       title: 'Hecho!',
-                      text: 'Asignación Realizada.',
+                      text: 'Evento creado',
                       type: 'success',
                       confirmButtonText: 'Ok',
                       confirmButtonColor: '#3b3a30',
@@ -131,7 +131,7 @@ crearEventoAcademico(){
                   console.log(evento);
                   swal({
                       title: 'Hecho!',
-                      text: 'Asignación Realizada.',
+                      text: 'Evento creado.',
                       type: 'success',
                       confirmButtonText: 'Ok',
                       confirmButtonColor: '#3b3a30',
@@ -169,7 +169,7 @@ createReunionLaboral(){
                   console.log(evento);
                   swal({
                       title: 'Hecho!',
-                      text: 'Asignación Realizada.',
+                      text: 'Evento creado.',
                       type: 'success',
                       confirmButtonText: 'Ok',
                       confirmButtonColor: '#3b3a30',
@@ -207,7 +207,7 @@ createReunionSocial(){
                   console.log(evento);
                   swal({
                       title: 'Hecho!',
-                      text: 'Asignación Realizada.',
+                      text: 'Evento creado.',
                       type: 'success',
                       confirmButtonText: 'Ok',
                       confirmButtonColor: '#3b3a30',
@@ -245,7 +245,7 @@ createCitaMedica(){
                   console.log(evento);
                   swal({
                       title: 'Hecho!',
-                      text: 'Asignación Realizada.',
+                      text: 'Evento creado.',
                       type: 'success',
                       confirmButtonText: 'Ok',
                       confirmButtonColor: '#3b3a30',
