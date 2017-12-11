@@ -22,7 +22,6 @@
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
@@ -32,10 +31,37 @@
   animation-name: fadeIn;
 }
 
-.card-columns{
+.card-columns {
   margin: 5px;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
-.btn{
-   background-color: #CC0000;
+.elem {
+  background-color: #FF0000;
+  cursor: pointer;
+  border: 1px solid #545555;
+  margin-bottom: 0.5em;
+  padding: 0.5em 2em;
+  transition: background-color 0.15s;
+}
+
+.elem:hover {
+  background-color: #545555;
+  color: #fff;
+}
+
+.modif {
+  background-color: #f6f6f6;
+  border: 1px solid #545555;
+  cursor: pointer;
+  margin-bottom: 0.5em;
+  padding: 0.5em 2em;
+  transition: background-color 0.15s;
+}
+
+.modif:hover {
+  background-color: #545555;
+  color: #fff;
 }

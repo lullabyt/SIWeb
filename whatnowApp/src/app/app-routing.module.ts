@@ -9,6 +9,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { CreareventoComponent } from './components/crearevento/crearevento.component';
 import { NotasComponent } from './components/notas/notas.component';
+import { MapaComponent } from './components/mapa/mapa.component';
 
 import { PageNotFoundComponent } from './not-found.component';
 
@@ -48,6 +49,9 @@ const routes: Routes = [
       },
       {
         path: 'notas', component: NotasComponent
+      },
+      {
+        path: 'mapa', component: MapaComponent
       },
       {
         path: '', redirectTo: '/inicio', pathMatch: 'full'

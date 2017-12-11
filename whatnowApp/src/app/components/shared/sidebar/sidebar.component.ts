@@ -1,7 +1,7 @@
 import { Component, AnimationTransitionEvent } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from '../../../services/auth/authentication.service'
+import { AuthenticationService } from '../../../services/auth/authentication.service';
 
 import swal from 'sweetalert2';
 
@@ -12,6 +12,7 @@ import swal from 'sweetalert2';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
+
   title = 'sidebar';
   img = 'calendar.jpg';
   private _opened: boolean = true;

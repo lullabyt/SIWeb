@@ -40,8 +40,8 @@ import {
 
 //services
 import { AuthenticationService } from './services/auth/authentication.service';
-import {EventoService} from './services/evento.service';
-import {NotasService} from './services/notas.service';
+import { EventoService } from './services/evento.service';
+import { NotasService } from './services/notas.service';
 
 
 import { AppComponent } from './app.component';
@@ -60,6 +60,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { NotasComponent } from './components/notas/notas.component';
+import { MapaComponent } from './components/mapa/mapa.component';
 
 
 @NgModule({
@@ -111,7 +112,8 @@ export class MaterialModule { }
     InicioComponent,
     CreareventoComponent,
     FooterComponent,
-    NotasComponent
+    NotasComponent,
+    MapaComponent
   ],
   imports: [
     BrowserModule,

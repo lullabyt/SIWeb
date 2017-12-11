@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from '../../services/auth/authentication.service'
-import { Usuario } from '../../classes/usuario'
+import { AuthenticationService } from '../../services/auth/authentication.service';
+import { Usuario } from '../../classes/usuario';
 
 import swal from 'sweetalert2';
 
@@ -15,7 +15,6 @@ import swal from 'sweetalert2';
 export class SignupComponent implements OnInit {
 
   public user = new Usuario();
-  public errorMsg = '';
 
   constructor(
     private _authService: AuthenticationService,

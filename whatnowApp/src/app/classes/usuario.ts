@@ -1,3 +1,6 @@
+import { Nota } from './nota';
+//import {Proyecto} from './proyecto';
+
 export class Usuario {
   nombre: string;
   apellido: string;
@@ -11,4 +14,13 @@ export class Usuario {
   lugarEstudio: string;
   _id: string;
 
+  notas: [Nota];
+
+  //cualquier eventoGeo
+  eventos: [{
+    kind: string,
+    item: string
+  }];
+
+  //  proyectos: [Proyecto];
 }

@@ -29,7 +29,7 @@
         <p> <a [routerLink]="['inicio']" routerLinkActive="active">Proyectos</a></p>
         <hr>
         <br>
-        <p> <a [routerLink]="['inicio']" routerLinkActive="active">Mapa</a></p>
+        <p> <a [routerLink]="['mapa']" routerLinkActive="active">Mapa</a></p>
         <hr>
         <br>
         <p> <a [routerLink]="['inicio']" routerLinkActive="active">Calendario</a></p>
@@ -62,7 +62,7 @@
   <div ng-sidebar-content>
     <header class="header">
       <button (click)="_toggleSidebar()" class="header__toggle">Toggle sidebar</button>
-      <span (click)="_toggleSidebar()"> Menu</span>
+      <span (click)="_toggleSidebar()"><a> Menu</a></span>
     </header>
     <router-outlet></router-outlet>
 
