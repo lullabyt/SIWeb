@@ -31,7 +31,7 @@ router.post('/:_id', (req, res) => {
     ).then(function(usuario) {
       //actualiza la referencia al usuario
       var event = {
-        kind: 'reunionLaboral',
+        kind: 'ReunionLaboral',
         item: evento._id
       }
       usuario.eventos.push(event);

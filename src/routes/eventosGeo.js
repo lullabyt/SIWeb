@@ -45,7 +45,7 @@ console.log("ESTA EN ELS ERVIDORRRRR");
     ).then(function(usuario) {
       //actualiza la referencia al usuario
       var event = {
-        kind: 'eventoGeo',
+        kind: 'EventoGeo',
         item: evento._id
       }
       usuario.eventos.push(event);

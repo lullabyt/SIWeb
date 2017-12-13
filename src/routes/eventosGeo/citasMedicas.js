@@ -32,7 +32,7 @@ router.post('/:_id', (req, res) => {
     ).then(function(usuario) {
       //actualiza la referencia al usuario
       var event = {
-        kind: 'citaMedica',
+        kind: 'CitaMedica',
         item: evento._id
       }
       usuario.eventos.push(event);

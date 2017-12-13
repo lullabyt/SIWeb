@@ -4,6 +4,8 @@ import { Headers, Http } from '@angular/http';
 
 import { EventoService } from '../../services/evento.service';
 import {Coordenada} from '../../classes/coordenadas';
+import { AuthenticationService } from '../../services/auth/authentication.service';
+import { Usuario } from '../../classes/usuario'
 
 //sweet alert
 import swal from 'sweetalert2';
@@ -15,6 +17,7 @@ import swal from 'sweetalert2';
 })
 export class CreareventoComponent implements OnInit {
 
+  user: Usuario;
   private selectedDateFrom: Date = null;
   private selectedDateTo: Date = null;
   private descripcion: String = "";
@@ -23,7 +26,6 @@ export class CreareventoComponent implements OnInit {
   private altura: String;
   private localidad: String;
   private tipo: string;
-  private id: String = '59d696abceda233e3463aade';
 
   private nombreEspecialista: String = "";
   private especialidad: String = "";
@@ -41,10 +43,12 @@ export class CreareventoComponent implements OnInit {
 
   constructor(
     private dateAdapter: DateAdapter<NativeDateAdapter>,
+    private _authService: AuthenticationService,
     private _eventoService: EventoService,
     private http: Http
   ) {
     dateAdapter.setLocale('es-ES');
+    this.user = this._authService.user;
   }
 
   ngOnInit() {
@@ -88,7 +92,7 @@ crearEvento(){
       street: this.calle,
       city: this.localidad
     }
-    this._eventoService.crearEvento(this.id, this.nombre, this.descripcion, this.selectedDateFrom,
+    this._eventoService.crearEvento(this.user._id, this.nombre, this.descripcion, this.selectedDateFrom,
                 this.selectedDateTo, datosGeojson).then(evento =>{
                   console.log(evento);
                   swal({
@@ -126,7 +130,7 @@ crearEventoAcademico(){
       street: this.calle,
       city: this.localidad
     }
-    this._eventoService.createEventoAcademico(this.id, this.nombre, this.descripcion, this.selectedDateFrom,
+    this._eventoService.createEventoAcademico(this.user._id, this.nombre, this.descripcion, this.selectedDateFrom,
                 this.selectedDateTo, datosGeojson, this.tipoAcademico).then(evento =>{
                   console.log(evento);
                   swal({
@@ -164,7 +168,7 @@ createReunionLaboral(){
       street: this.calle,
       city: this.localidad
     }
-    this._eventoService.createReunionLaboral(this.id, this.nombre, this.descripcion, this.selectedDateFrom,
+    this._eventoService.createReunionLaboral(this.user._id, this.nombre, this.descripcion, this.selectedDateFrom,
                 this.selectedDateTo, datosGeojson, this.participantes).then(evento =>{
                   console.log(evento);
                   swal({
@@ -202,7 +206,7 @@ createReunionSocial(){
       street: this.calle,
       city: this.localidad
     }
-    this._eventoService.createReunionSocial(this.id, this.nombre, this.descripcion, this.selectedDateFrom,
+    this._eventoService.createReunionSocial(this.user._id, this.nombre, this.descripcion, this.selectedDateFrom,
                 this.selectedDateTo, datosGeojson, this.dinero).then(evento =>{
                   console.log(evento);
                   swal({
@@ -240,7 +244,7 @@ createCitaMedica(){
       street: this.calle,
       city: this.localidad
     }
-    this._eventoService.createCitaMedica(this.id, this.nombre, this.descripcion, this.selectedDateFrom,
+    this._eventoService.createCitaMedica(this.user._id, this.nombre, this.descripcion, this.selectedDateFrom,
                 this.selectedDateTo, datosGeojson, this.nombreEspecialista, this.especialidad, this.telefono, this.tipoConsulta).then(evento =>{
                   console.log(evento);
                   swal({
