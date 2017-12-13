@@ -118,6 +118,22 @@ export class EventoService {
       .catch(this.handleError);
   }
 
+  obtenerEventos(id: string): Promise<any>{
+  var url = this.eventoUrl+'/usuario/'+id;
+  return this.http.get(url)
+  .toPromise()
+  .then(response => response.json() as any)
+  .catch(this.handleError);
+  }
+
+  getEvento(id: string): Promise<EventoGeo>{
+    var url = this.eventoUrl+'/'+id;
+    return this.http.get(url)
+    .toPromise()
+    .then(response => response.json() as EventoGeo)
+    .catch(this.handleError);
+  }
+
 
 
 }

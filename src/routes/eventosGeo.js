@@ -14,6 +14,7 @@ router.get('/', (req, res) => {
   });
 });
 
+
 //Obtener los eventos de un usuario particular - no importa el tipo
 router.get('/usuario/:_id', (req, res) => {
   Usuario.find({
