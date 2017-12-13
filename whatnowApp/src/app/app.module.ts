@@ -62,6 +62,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { NotasComponent } from './components/notas/notas.component';
 import { MapaComponent } from './components/mapa/mapa.component';
+import { CrearnotaComponent } from './components/crearnota/crearnota.component';
 
 
 @NgModule({
@@ -114,7 +115,8 @@ export class MaterialModule { }
     CreareventoComponent,
     FooterComponent,
     NotasComponent,
-    MapaComponent
+    MapaComponent,
+    CrearnotaComponent
   ],
   imports: [
     AgmCoreModule.forRoot({

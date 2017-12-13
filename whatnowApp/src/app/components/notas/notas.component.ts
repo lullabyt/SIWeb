@@ -18,9 +18,8 @@ import swal from 'sweetalert2';
 export class NotasComponent implements OnInit {
 
   user: Usuario;
-  public note = new Nota();
 
-
+  notaSeleccionada: Nota = null;
   private notas: Nota[] = [];
 
   constructor(private _notasService: NotasService,
@@ -36,36 +35,6 @@ export class NotasComponent implements OnInit {
           console.log(resultado[0])
           this.notas = resultado[0].notas;
         });*/
-  }
-
-
-  crear() {
-    this._notasService.crear(this.user._id, this.note).then(resultado => {
-
-      this.user.notas.push(this.note);
-
-      swal({
-        title: 'Hecho!',
-        text: 'Nota creada con éxito.',
-        type: 'success',
-        confirmButtonText: 'Ok',
-        confirmButtonColor: '#3b3a30',
-        allowOutsideClick: false,
-        allowEscapeKey: false
-      });
-
-    }).catch((err) => {
-      console.log(err);
-      swal({
-        title: 'Error!',
-        text: 'Se ha producido un error. Pruebe más tarde.',
-        type: 'error',
-        confirmButtonText: 'Ok',
-        confirmButtonColor: '#3b3a30',
-        allowOutsideClick: false,
-        allowEscapeKey: false
-      });
-    });
   }
 
 
@@ -122,13 +91,26 @@ export class NotasComponent implements OnInit {
   }
 
 
+  seleccionar(nota: Nota) {
+    this.notaSeleccionada = nota;
+  }
 
-  modificar(_id: string) {
-    this._notasService.modificar(this.note).then(resultado => {
+  seleccionada() {
+    return this.notaSeleccionada !== null;
+  }
+
+  cancelarSeleccion() {
+    this.notaSeleccionada = null;
+
+  }
+
+  modificar() {
+    this._notasService.modificar(this.notaSeleccionada).then(resultado => {
 
       for (let i = 0; i < this.user.notas.length; i++) {
-        if (this.user.notas[i]._id === _id) {
-          this.user.notas.splice(i, 1);
+        if (this.user.notas[i]._id === this.notaSeleccionada._id) {
+          this.user.notas[i] = this.notaSeleccionada;
+          this.cancelarSeleccion();
           return swal({
             title: 'Hecho!',
             text: 'Nota modificada con éxito.',
@@ -141,9 +123,9 @@ export class NotasComponent implements OnInit {
         }
       }
 
-
     }).catch((err) => {
       console.log(err);
+      this.cancelarSeleccion();
       swal({
         title: 'Error!',
         text: 'Se ha producido un error. Pruebe más tarde.',
@@ -154,5 +136,13 @@ export class NotasComponent implements OnInit {
         allowEscapeKey: false
       });
     });
+  }
+
+
+  formCompletado() {
+    if (this.notaSeleccionada.titulo && this.notaSeleccionada.contenido) {
+      return true;
+    } else { return false; }
+
   }
 }
