@@ -3,12 +3,11 @@ import { ElementRef, NgZone, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
-import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 import { AuthenticationService } from '../../services/auth/authentication.service';
 import { EventoService } from '../../services/evento.service';
 
-import {Usuario} from '../../classes/usuario';
-import {EventoGeo} from '../../classes/eventoGeo';
+import { Usuario } from '../../classes/usuario';
+import { EventoGeo } from '../../classes/eventoGeo';
 
 @Component({
   selector: 'app-inicio',
@@ -25,7 +24,7 @@ export class InicioComponent implements OnInit {
   public searchControl: FormControl;
   public zoom: number;
   user: Usuario;
-  public eventos: any[]=[];
+  public eventos: any[] = [];
   private datosEventos = [];
 
   @ViewChild("search")
@@ -78,15 +77,6 @@ export class InicioComponent implements OnInit {
     });
 
     this.eventos = this.user.eventos;
-    var aux;
-    for (let variable of this.eventos) {
-        aux = {
-          kind: variable.kind,
-          item: variable.item
-        }    
-        this.datosEventos.push(aux);
-    }
-    console.log(this.datosEventos);
 
   }
 

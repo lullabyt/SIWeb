@@ -19,7 +19,7 @@ export class Usuario {
   //cualquier eventoGeo
   eventos: [{
     kind: string,
-    item: string
+    item: any
   }];
 
   //  proyectos: [Proyecto];

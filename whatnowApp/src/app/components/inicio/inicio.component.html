@@ -1,36 +1,48 @@
 <div class="container-fluid">
-  <div class="titulo">
-    <br>
-    <h1>Próximos eventos</h1>
-  </div>
-<div class="row mapa">
-  <div class="container">
-    <div class="form-group">
-      <input placeholder="Buscar una ciudad" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+  <div class="row">
+    <div class="titulo">
+      <br>
+      <br>
+      <h1>Próximos eventos</h1>
     </div>
-    <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-      <agm-marker [latitude]="evento.item.datosGeojson.lat" [longitude]="evento.item.datosGeojson.lng" [openInfoWindow]="true"
-       *ngFor="let evento of eventos">
-        <agm-info-window #infoWindow>
-          <strong>{{evento.item.nombre}}</strong>
-        </agm-info-window>
-      </agm-marker>
-    </agm-map>
   </div>
-</div>
-        <div class="row">
-
-                      <div class="card-columns">
-                        <div class="card" *ngFor="let evento of datosEventos">
-                          <div class="card-header">{{evento.kind}}</div>
-                          <div class="card-body">
-                            <h4 class="card-title"> {{evento.item.nombre}} </h4>
-                            <p class="card-text"> {{evento.item.descripcion}} </p>
-                          </div>
-                        </div>
-                      </div>
+  <div class="row mapa">
+    <div class="container">
+      <div class="form-group">
+        <input placeholder="Buscar una ciudad" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+      </div>
+      <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+        <agm-marker [latitude]="evento.item.datosGeojson.lat" [longitude]="evento.item.datosGeojson.lng" [openInfoWindow]="true" *ngFor="let evento of eventos">
+          <agm-info-window #infoWindow>
+            <strong>{{evento.item.nombre}}</strong>
+          </agm-info-window>
+        </agm-marker>
+      </agm-map>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card-columns">
+      <div class="card" *ngFor="let evento of eventos; let i = index">
+        <div class="card-header">{{evento.kind}}</div>
+        <div class="card-body">
+          <h4 class="card-title"> {{evento.item.nombre}} </h4>
+          <br>
+          <p class="card-text">{{evento.item.descripcion}} </p>
+          <!--<br>
+        <br>
+        <div class="row margin-top margin-bottom justify-content-center">
+          <div class="col-md-6">
+            <p class="card-text"> Fecha Inicio: {{evento.item.fechaInicio}} </p>
+          </div>
+          <div class="col-md-6">
+            <p class="card-text"> Fecha Fin: {{evento.item.fechaFin}} </p>
+          </div>
         </div>
-
-
+        <button (click)="eliminar(nota._id)" type="button" class="elem"> Eliminar</button>
+        <button (click)="seleccionar(nota)" type="button" class="modif "> Modificar</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
