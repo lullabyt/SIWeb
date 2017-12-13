@@ -3,6 +3,16 @@
   height: 350px;
   margin: 100px auto;
   box-shadow: 2px 3px 15px -8px;
+  animation: MyAnimation 1s;
+}
+
+@keyframes MyAnimation {
+  0% {
+    margin-right: 390px;
+  }
+  100% {
+    margin-right: 560px;
+  }
 }
 
 .content {

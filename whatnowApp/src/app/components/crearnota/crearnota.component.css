@@ -6,6 +6,20 @@
   animation: MyAnimation 1s;
 }
 
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.fast {
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
 @keyframes MyAnimation {
   0% {
     margin-right: 390px;
@@ -13,28 +27,6 @@
   100% {
     margin-right: 560px;
   }
-}
-
-.desc {
-  height: 80px;
-}
-
-.form-date {
-  vertical-align: bottom;
-  border: none;
-  border-bottom: none;
-  margin-top: -.4em;
-  outline: 0;
-  height: 5;
-}
-
-.mat-input-element {
-  vertical-align: bottom;
-  border: none;
-  border-bottom: none;
-  margin-top: -.4em;
-  outline: 0;
-  height: 5;
 }
 
 .content {
@@ -66,6 +58,10 @@
 
 .panel-body button {
   float: right;
-  Margin-top: 50px;
   background: #0273d4;
+  Margin-top: 50px;
+}
+
+.desc {
+  height: 80px;
 }

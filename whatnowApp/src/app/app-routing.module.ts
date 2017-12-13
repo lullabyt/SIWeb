@@ -10,6 +10,7 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { CreareventoComponent } from './components/crearevento/crearevento.component';
 import { NotasComponent } from './components/notas/notas.component';
 import { MapaComponent } from './components/mapa/mapa.component';
+import { CrearnotaComponent } from './components/crearnota/crearnota.component';
 
 import { PageNotFoundComponent } from './not-found.component';
 
@@ -49,6 +50,9 @@ const routes: Routes = [
       },
       {
         path: 'notas', component: NotasComponent
+      },
+      {
+        path: 'notas/crearnota', component: CrearnotaComponent
       },
       {
         path: 'mapa', component: MapaComponent

@@ -27,6 +27,7 @@ export class NotasService {
 
   crear(_idUsuario: string, note: Nota): Promise<any> {
 
+    const url = `${this.notasUrl}/${_idUsuario}`;
 
     let nota = JSON.stringify({
 
@@ -38,7 +39,7 @@ export class NotasService {
     });
 
     return this.http
-      .post(this.notasUrl, nota, { headers: this.headers })
+      .post(url, nota, { headers: this.headers })
       .toPromise()
       .then(res => {
         console.log(res.json());

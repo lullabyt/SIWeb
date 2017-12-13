@@ -1,11 +1,69 @@
 <div class="container-fluid">
-  <div class="titulo">
-    <br>
-    <br>
-    <h1>Mis Notas</h1>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="titulo">
+        <br>
+        <br>
+        <h1>Mis Notas</h1>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <button class="control" [routerLink]="['crearnota']" routerLinkActive="active"><a>Crea tu Nota!</a></button>
+    </div>
   </div>
+  <div class="container" *ngIf="seleccionada()">
+    <div class="title">
+      Modificar nota
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="Titulo">Titulo</label>
+          <input type="text" class="form-control" id="Titulo" [(ngModel)]="notaSeleccionada.titulo" value="notaSeleccionada.titulo">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="Tipo">Tipo</label>
+          <input type="text" class="form-control" id="Tipo" [(ngModel)]="notaSeleccionada.tipo" value="notaSeleccionada.tipo">
+        </div>
+      </div>
 
-  <div class="card-columns" fadeIn>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="exampleFormControlTextarea1"> Contenido </label>
+          <textarea class="desc" id="exampleFormControlTextarea1" rows="8" [(ngModel)]="notaSeleccionada.contenido" value="notaSeleccionada.contenido"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <div class="form-group col-md-12">
+            <label for="exampleFormControlSelect1">Criticidad</label>
+            <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="notaSeleccionada.criticidad" value="notaSeleccionada.criticidad">>
+                  <option>Prioritaria</option>
+                  <option>Alta</option>
+                  <option>Media</option>
+                  <option>Baja</option>
+                  <option>No tiene</option>
+                </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-group col-md-12">
+            <label for="exampleFormControlSelect1">Estado</label>
+            <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="notaSeleccionada.estado" value="notaSeleccionada.estado">>
+                  <option>En curso</option>
+                  <option>Terminada</option>
+                  <option>No tiene</option>
+                </select>
+          </div>
+        </div>
+        <span>{{errorMsg}}</span>
+        <button *ngIf="!formCompletado()" class="btn waves-effect waves-light" type="submit" name="action" disabled>Modificar nota</button>
+        <button *ngIf="formCompletado()" (click)="modificar()" class="btn waves-effect waves-light" type="submit" name="action">Modificar nota</button>
+
+      </div>
+    </div>
+  </div>
+  <div class="card-columns" *ngIf="!seleccionada()">
     <div class="card" *ngFor="let nota of notas; let i = index">
       <div class="card-header">Estado: {{nota.estado}}</div>
       <div class="card-body">
@@ -23,8 +81,9 @@
           </div>
         </div>
         <button (click)="eliminar(nota._id)" type="button" class="elem"> Eliminar</button>
-        <button (click)="modificar(nota._id)" type="button" class="modif "> Modificar</button>
+        <button (click)="seleccionar(nota)" type="button" class="modif "> Modificar</button>
       </div>
     </div>
   </div>
+
 </div>
