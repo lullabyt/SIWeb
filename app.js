@@ -7,6 +7,7 @@ const VariablesGlobales = require('./src/utiles/variablesGlobales');
 
 const bodyParser = require('body-parser');
 const fs = require('fs');
+let config = require('config');
 
 const passport = require('passport');
 const flash = require('connect-flash-plus');
@@ -36,7 +37,6 @@ var options = {
 };
 
 
-
 // Get our API routes
 const api = require('./src/routes/api');
 const eventosGeo = require('./src/routes/eventosGeo');
@@ -55,7 +55,7 @@ const usuarios = require('./src/routes/usuarios');
 var mongoose = require('mongoose');
 
 //direccion a la base de datos
-var dbURI = 'mongodb://localhost/whatnow';
+var dbURI = config.DBHost;
 
 
 //Set up default mongoose connection
@@ -190,6 +190,9 @@ insecureServer.listen(insecurePort, function() {
   console.log("\nRedirecting all http traffic to https\n");
 });
 
+
+//testing
+module.exports = insecureServer;
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
+var validator = require("email-validator");
+var ObjectId = require('mongoose').Types.ObjectId;
+
 var Usuario = require('../models/usuario');
 
 
@@ -19,12 +22,22 @@ router.post('/signup', function(req, res, next) {
     if (err) {
       return next(err); // will generate a 500 error
     }
-    // Generate a JSON response reflecting authentication status
 
-    if (user) {
-      return res.send({
+    if (user === null) {
+      //credenciales erroneas
+      return res.status(400).send({
         success: false,
-        message: 'Ese email ya ha sido tomado.'
+        message: info
+      });
+
+    }
+
+    // Generate a JSON response reflecting authentication status
+    if (user) {
+      //usuario ya existe en sistema
+      return res.status(200).send({
+        success: false,
+        message: info
       });
 
     }
@@ -48,7 +61,7 @@ router.post('/signup', function(req, res, next) {
           return next(loginErr);
         }
 
-        return res.send({
+        return res.status(200).send({
           success: true,
           message: 'signup succeeded',
           newUser: newUser
@@ -56,7 +69,7 @@ router.post('/signup', function(req, res, next) {
       });
 
     }, function(err) {
-      res.send(err);
+      res.status(400).send(err);
     });
 
   })(req, res, next);
@@ -76,9 +89,20 @@ router.post('/login', function(req, res, next) {
     if (err) {
       return next(err); // will generate a 500 error
     }
+
+    if (user === null) {
+      //credenciales erroneas
+      return res.status(400).send({
+        success: false,
+        message: info
+      });
+
+    }
+
     // Generate a JSON response reflecting authentication status
     if (!user) {
-      return res.send({
+      //no se encontro usuario segun credenciales correctas
+      return res.status(200).send({
         success: false,
         message: info
       });
@@ -93,7 +117,7 @@ router.post('/login', function(req, res, next) {
       if (loginErr) {
         return next(loginErr);
       }
-      return res.send({
+      return res.status(200).send({
         success: true,
         message: 'authentication succeeded',
         user: user
@@ -110,7 +134,7 @@ router.get('/logout', isLoggedIn, function(req, res) {
   req.flash('success_msg', 'You are logged out.')
   //  res.redirect('/');
 
-  res.send({
+  res.status(200).send({
     success: true,
     message: 'You are logged out.'
   });
@@ -129,7 +153,7 @@ function isLoggedIn(req, res, next) {
   // if they aren't redirect them to the home page
   //res.redirect('/');
 
-  res.send({
+  res.status(200).send({
     success: false,
     message: 'Not logged in'
   });
@@ -140,9 +164,9 @@ function isLoggedIn(req, res, next) {
 //get todos los usuarios
 router.get('/', (req, res) => {
   Usuario.find().then(function(usuarios) {
-    res.json(usuarios);
+    res.status(200).json(usuarios);
   }, function(err) {
-    res.send(err);
+    res.status(400).send(err);
   });
 });
 
@@ -150,17 +174,24 @@ router.get('/', (req, res) => {
 //get todos los datos pertenecientes a un usuario especifico, junto con sus respectivas notas, proyectos y eventos
 router.get('/:_id', (req, res) => {
 
-  Usuario.findById(req.params._id)
-    .populate(
-      'notas proyectos')
-    .populate(
-      'eventos.item')
-    .then(function(usuario) {
-      res.json(usuario);
+  if (checkObjectId(req.params._id)) {
 
-    }, function(err) {
-      res.send(err);
-    });
+    Usuario.findById(req.params._id)
+      .populate(
+        'notas proyectos')
+      .populate(
+        'eventos.item')
+      .then(function(usuario) {
+        res.status(200).json(usuario);
+
+      }, function(err) {
+        res.status(400).send(err);
+      });
+
+  } else {
+
+    res.status(400).send("formato id invalido");
+  }
 
   /*
   test para probar compare password
@@ -191,28 +222,45 @@ router.get('/:_id', (req, res) => {
 
 router.post('/', (req, res) => {
 
-  var user = new Usuario(req.body
-    /*
-    nombre: req.body.nombre,
-    apellido: req.body.apellido,
-    mail: req.body.mail,
-    password: req.body.password,
-    telefono: req.body.telefono,
-    genero: req.body.genero,
-    fechaNacimiento: req.body.fechaNacimiento,
-    localidadActual: req.body.localidadActual,
-    lugarTrabajo: req.body.lugarTrabajo,
-    lugarEstudio: req.body.lugarEstudio
-    */
-  );
+  if (req.body.password) {
+    if (validator.validate(req.body.email)) {
+      if (isValidDate(req.body.fechaNacimiento)) {
 
-  //una vez creada se guarda en la base de datos
-  user.save().then(function() {
-    res.json(user);
+        var user = new Usuario(req.body
+          /*
+          nombre: req.body.nombre,
+          apellido: req.body.apellido,
+          mail: req.body.mail,
+          password: req.body.password,
+          telefono: req.body.telefono,
+          genero: req.body.genero,
+          fechaNacimiento: req.body.fechaNacimiento,
+          localidadActual: req.body.localidadActual,
+          lugarTrabajo: req.body.lugarTrabajo,
+          lugarEstudio: req.body.lugarEstudio
+          */
+        );
 
-  }, function(err) {
-    res.send(err);
-  });
+        //una vez creada se guarda en la base de datos
+        user.save().then(function() {
+          res.status(200).json(user);
+
+        }, function(err) {
+          res.status(400).send(err);
+        });
+
+      } else {
+
+        res.status(400).send("formato date invalido");
+      }
+
+    } else {
+      res.status(400).send('Formato mail incorrecto');
+    }
+  } else {
+    res.status(400).send('Password requerida');
+  }
+
 });
 
 
@@ -220,53 +268,115 @@ router.post('/', (req, res) => {
 //para cualquier modifcacion menos contraseñas
 router.patch('/:_id', (req, res) => {
 
-  Usuario.findByIdAndUpdate(req.params._id,
-    //solo hace update de los atributos que vengan en body, pueden ser uno o muchos
-    req.body, {
-      //para que devuelva actualizado
-      new: true
-    }).then(function(user) {
-    res.json(user);
+  if (checkObjectId(req.params._id)) {
 
-  }, function(err) {
-    res.send(err);
-  });
+    Usuario.findByIdAndUpdate(req.params._id,
+      //solo hace update de los atributos que vengan en body, pueden ser uno o muchos
+      req.body, {
+        //para que devuelva actualizado
+        new: true
+      }).then(function(user) {
+      res.status(200).json(user);
+
+    }, function(err) {
+      res.status(400).send(err);
+    });
+
+  } else {
+
+    res.status(400).send("formato id invalido");
+  }
+
 });
 
 
 //para modificar solo contraseñas
 router.patch('/password/:_id', (req, res) => {
 
-  Usuario.findById(req.params._id)
-    .then(function(user) {
+  if (checkObjectId(req.params._id)) {
 
-      user.password = req.body.password;
+    Usuario.findById(req.params._id)
+      .then(function(user) {
 
-      user.save().then(function() {
-        res.json(user);
+        user.password = req.body.password;
+
+        user.save().then(function() {
+          res.status(200).json(user);
+
+        }, function(err) {
+          res.status(400).send(err);
+        });
 
       }, function(err) {
-        res.send(err);
+        res.status(400).send(err);
       });
 
-    }, function(err) {
-      res.send(err);
-    });
+  } else {
+
+    res.status(400).send("formato id invalido");
+  }
+
 });
 
 
 router.delete('/:_id', (req, res) => {
-  Usuario.findByIdAndRemove(
-    req.params._id
-  ).then(function() {
-    res.json({
-      message: 'Successfully deleted usuario (sus creaciones persisten)'
+
+  if (checkObjectId(req.params._id)) {
+
+    Usuario.findByIdAndRemove(
+      req.params._id
+    ).then(function(result) {
+      res.status(200).json({
+        message: 'Successfully deleted usuario (sus creaciones persisten)',
+        result
+      });
+    }, function(err) {
+      res.status(400).send(err);
     });
-  }, function(err) {
-    res.send(err);
-  });
+  } else {
+
+    res.status(400).send("formato id invalido");
+  }
+
 });
 
+
+
+// funcion que verifica formato ObjectId
+
+const checkObjectId = function(id) {
+
+  if (ObjectId.isValid(id)) {
+
+    var prueba = new ObjectId(id);
+
+    if (prueba == id) {
+      return true
+
+    } else {
+      return false
+    }
+
+  } else {
+    return false
+  }
+
+};
+
+
+const isValidDate = function(dateString) {
+
+  if (dateString) {
+    var regEx = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateString.match(regEx)) return false; // Invalid format
+    var d = new Date(dateString);
+    if (!d.getTime()) return false; // Invalid date (or this could be epoch)
+    return d.toISOString().slice(0, 10) === dateString;
+  } else {
+    return false;
+  }
+
+}
 
 
 module.exports = router;
